@@ -19,7 +19,14 @@ workout1 = Workout.new(
   posted: false,
   started: false)
 
+workout2 = Workout.new(
+  name: 'Workout 2',
+  difficulty: 'High',
+  posted: true,
+  started: true)
+
 jordan.workouts << workout1
+dess.workouts << workout2
 
 # Exercises
 thruster = Exercise.new(name: 'Thruster', detail: 'Strength - 90 pounds', duration: '3 Rounds of 10')
@@ -29,11 +36,57 @@ russiantwist = Exercise.new(name: 'Russian Twist', detail: 'Core - 15 pounds min
 boxjumps = Exercise.new(name: 'Box Jumps', detail: 'Endurance', duration: '3 Rounds of 20')
 lunges = Exercise.new(name: 'Lunges', detail: 'Strength - with 10 pound weight', duration: '5 Rounds of 10')
 
-dess.workouts.create(exercise: thruster, completed: true, pr: true, comment: '90 pounds max')
-dess.workouts.create(exercise: russiantwist, completed: true, pr: false, comment: '15 pounds')
-dess.workouts.create(exercise: lunges, completed: false, pr: false, comment: 'need to stretch more')
+workout1.exercises << backsquat << toestobar << lunges
+workout2.exercises << thruster << russiantwist << boxjumps << toestobar
 
-jordan.workouts.create(exercise: backsquat, completed: true, pr: true, comment: '205 pounds max')
-jordan.workouts.create(exercise: toestobar, completed: false, pr: false, comment: 'did not finish the last round')
-jordan.workouts.create(exercise: boxjumps, completed: true, pr: false, comment: '28 inches high')
 
+dess.workout_sessions.create!(workout: workout1, pr: false, comment: 'Not bad but did better last time',
+  accomplished: true, status: 'complete')
+
+dess.exercise_sessions.create!(exercise: backsquat,
+  pr: true,
+  comment: 'did it',
+  mod: nil,
+  accomplished: true,
+  status: 'complete')
+dess.exercise_sessions.create!(exercise: toestobar,
+  pr: false,
+  comment: 'struggled',
+  mod: 'did v situps instead',
+  accomplished: true,
+  status: 'complete')
+dess.exercise_sessions.create!(exercise: lunges,
+  pr: false,
+  comment: 'getting pretty good',
+  mod: 'added ten pound weight',
+  accomplished: true,
+  status: 'complete')
+
+
+jordan.workout_sessions.create!(workout: workout2, pr: true, comment: 'crushed it',
+  accomplished: true, status: 'complete')
+
+jordan.exercise_sessions.create!(exercise: thruster,
+  pr: false,
+  comment: 'very hard',
+  mod: 'used a lighter weight',
+  accomplished: true,
+  status: 'complete')
+jordan.exercise_sessions.create!(exercise: russiantwist,
+  pr: true,
+  comment: 'abs are killing me!',
+  mod: nil,
+  accomplished: true,
+  status: 'complete')
+jordan.exercise_sessions.create!(exercise: boxjumps,
+  pr: false,
+  comment: 'higher than last time',
+  mod: nil,
+  accomplished: true,
+  status: 'complete')
+jordan.exercise_sessions.create!(exercise: toestobar,
+  pr: false,
+  comment: 'struggled with the last set',
+  mod: 'did v-ups the last set',
+  accomplished: true,
+  status: 'complete')
