@@ -14,5 +14,5 @@
 class Exercise < ActiveRecord::Base
   belongs_to :workout
   has_many :exercise_sessions
-  has_many :users, through: :exercise_sessions
+  # has_many :users, through: :exercise_sessions
 end

@@ -27,6 +27,6 @@ class User < ActiveRecord::Base
 
   has_many :workout_sessions
   has_many :exercise_sessions
-  has_many :workouts, through: :workout_sessions
-  has_many :exercises, through: :exercise_sessions
+  has_many :workouts
+  # has_many :exercises, through: :exercise_sessions
 end

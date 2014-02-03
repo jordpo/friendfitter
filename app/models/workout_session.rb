@@ -13,5 +13,5 @@
 
 class WorkoutSession < ActiveRecord::Base
   belongs_to :workout
-  belongs_to :follower
+  belongs_to :user
 end
