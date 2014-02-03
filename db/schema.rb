@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140203200454) do
+ActiveRecord::Schema.define(version: 20140203221825) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,14 @@ ActiveRecord::Schema.define(version: 20140203200454) do
   end
 
   add_index "exercises", ["workout_id"], name: "index_exercises_on_workout_id", using: :btree
+
+  create_table "exercises_workouts", id: false, force: true do |t|
+    t.integer "exercise_id", null: false
+    t.integer "workout_id",  null: false
+  end
+
+  add_index "exercises_workouts", ["exercise_id", "workout_id"], name: "index_exercises_workouts_on_exercise_id_and_workout_id", using: :btree
+  add_index "exercises_workouts", ["workout_id", "exercise_id"], name: "index_exercises_workouts_on_workout_id_and_exercise_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
