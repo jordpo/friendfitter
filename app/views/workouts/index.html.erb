@@ -4,6 +4,7 @@
   <article>
     <h2><%= link_to workout.name, workout %></h2>
     <p>Owner: <%= workout.user.username %></p>
+    <p>Mantra: <%= workout.user.mantra %></p>
     <p>Difficulty: <%= workout.difficulty %></p>
     <p>Posted Status: <%= workout.posted? ? 'Posted' : 'Not Posted' %></p>
     <p>Workout Status: <%= workout.started? ? 'Started' : 'Not Started' %></p>

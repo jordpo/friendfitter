@@ -4,6 +4,7 @@ class WorkoutsController < ApplicationController
   end
 
   def show
+    @exercise = Exercise.new
     @workout = Workout.find(params[:id])
   end
 
@@ -14,6 +15,11 @@ class WorkoutsController < ApplicationController
   def create
     @workout = Workout.new(workout_params)
     current_user.workouts << @workout
+    exercises = params[:workout][:exercise_ids]
+    exercises.reject! { |c| c.empty? }
+    exercises.each do |i|
+      @workout.exercises << Exercise.find(i)
+    end
     redirect_to @workout
   end
 
@@ -24,6 +30,11 @@ class WorkoutsController < ApplicationController
   def update
     @workout = Workout.find(params[:id])
     @workout.update_attributes!(workout_params)
+    exercises = params[:workout][:exercise_ids]
+    exercises.reject! { |c| c.empty? }
+    exercises.each do |i|
+      @workout.exercises << Exercise.find(i)
+    end
     redirect_to @workout
   end
 
@@ -39,4 +50,5 @@ class WorkoutsController < ApplicationController
   def workout_params
     params.require(:workout).permit(:name, :difficulty, :posted, :started)
   end
+
 end

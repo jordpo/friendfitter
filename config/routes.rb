@@ -1,8 +1,7 @@
 FriendFitter::Application.routes.draw do
 
-  resources :workouts do
-    resources :exercises
-  end
+  resources :workouts
+  resources :exercises
   devise_for :users
 
   root to: 'workouts#index'

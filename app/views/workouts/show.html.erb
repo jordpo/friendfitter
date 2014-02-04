@@ -2,7 +2,6 @@
 <nav>
   <ul>
     <li><%= link_to 'Edit Workout', edit_workout_path %></li>
-    <li><%= link_to 'Add an Exercise', new_workout_exercise_path(@workout) %></li>
     <li><%=link_to 'Delete Workout',  @workout, method: 'delete', confirm: 'Are you sure?' %></li>
   </ul>
 </nav>
@@ -15,10 +14,9 @@
   <p>Exercises:</p>
   <ol>
     <% @workout.exercises.each do |exercise| %>
-      <li><%= link_to exercise.name, [@workout, exercise] %></li>
+      <li><%= link_to exercise.name, exercise %></li>
     <% end %>
   </ol>
-
   <p>Participants:</p>
   <ul>
     <% @workout.workout_sessions.each do |session| %>
