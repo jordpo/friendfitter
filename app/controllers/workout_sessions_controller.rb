@@ -38,6 +38,6 @@ end
 private
 
   def workout_session_params
-    params.require(:workout_session).permit(:workout_id, :pr, :comment, :accomplished, :status)
+    params.require(:workout_session).permit(:workout_id, :pr, :comment, :accomplished)
   end
 end
