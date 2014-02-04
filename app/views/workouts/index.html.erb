@@ -1,0 +1,26 @@
+<h1>Workouts</h1>
+
+<% @workouts.each do |workout| %>
+  <article>
+    <h2><%= workout.name %></h2>
+    <p>Owner: <%= workout.user.username %></p>
+    <p>Difficulty: <%= workout.difficulty %></p>
+    <p>Posted Status: <%= workout.posted? ? 'Posted' : 'Not Posted' %></p>
+    <p>Workout Status: <%= workout.started? ? 'Started' : 'Not Started' %></p>
+    <p>Who is doing this workout?</p>
+    <ul>
+      <% workout.workout_sessions.each do |session| %>
+        <li>
+          <%= session.user.username %>
+          <ul>
+            <li>PR: <%= session.pr? ? 'Yes' : 'No' %></li>
+            <li>Status: <%= session.status %></li>
+            <li>Accomplished: <%= session.accomplished? ? 'Yes' : 'No' %></li>
+            <li>Comments: <%= session.comment %></li>
+          </ul>
+        </li>
+      <% end %>
+    </ul>
+    <p>************************</p>
+  </article>
+<% end %>
