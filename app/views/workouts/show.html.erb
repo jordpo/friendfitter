@@ -47,8 +47,10 @@
           <li>Comments: <%= session.comment %></li>
         </ul>
         <% if session.user.id == current_user.id %>
-          <%= render partial: 'workout_session', locals: {workout_session: session, method: 'put', submit: 'Complete'} %>
-          <%= link_to 'Quit Workout', session, method: 'delete', confirm: 'are you sure' %>
+          <% if !session.accomplished? %>
+            <%= render partial: 'workout_session', locals: {workout_session: session, method: 'put', submit: 'Complete'} %>
+            <%= link_to 'Quit Workout', session, method: 'delete', confirm: 'are you sure' %>
+          <% end %>
         <% end%>
       </li>
     <% end %>
