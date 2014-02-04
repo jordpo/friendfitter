@@ -15,4 +15,8 @@ class Exercise < ActiveRecord::Base
   has_and_belongs_to_many :workouts
   has_many :exercise_sessions
   # has_many :users, through: :exercise_sessions
+
+  def workouts_to_add
+    Workout.all - self.workouts
+  end
 end

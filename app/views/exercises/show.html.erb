@@ -1,0 +1,12 @@
+<h1><%= @exercise.name %></h1>
+<%= link_to 'Edit Exercise', edit_exercise_path %>
+<article>
+  <p>Detail: <%= @exercise.detail %></p>
+  <p>Duration: <%= @exercise.duration %></p>
+  <p>Workouts:</p>
+  <ul>
+    <% @exercise.workouts.each do |workout| %>
+      <li><%= link_to workout.name, workout %></li>
+    <% end %>
+  </ul>
+</article>
