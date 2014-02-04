@@ -14,7 +14,22 @@
   <p>Exercises:</p>
   <ol>
     <% @workout.exercises.each do |exercise| %>
-      <li><%= link_to exercise.name, exercise %></li>
+      <li>
+        <%= link_to exercise.name, exercise %>
+        <% exercise.exercise_sessions.each do |exercise_session| %>
+          <% if exercise_session.workout == @workout %>
+            <ul>
+              <li>User: <%= exercise_session.user.username %></li>
+              <li>PR: <%= exercise_session.pr %></li>
+              <li>Comment: <%= exercise_session.comment %></li>
+              <li>Mod: <%= exercise_session.mod %></li>
+              <li>Accomplished: <%= exercise_session.accomplished %></li>
+              <li>Status: <%= exercise_session.status %></li>
+            </ul>
+            <br>
+          <% end %>
+        <% end %>
+      </li>
     <% end %>
   </ol>
   <p>Participants:</p>

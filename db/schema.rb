@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140203221825) do
+ActiveRecord::Schema.define(version: 20140204203711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,10 +24,12 @@ ActiveRecord::Schema.define(version: 20140203221825) do
     t.text    "mod"
     t.boolean "accomplished"
     t.text    "status"
+    t.integer "workout_id"
   end
 
   add_index "exercise_sessions", ["exercise_id"], name: "index_exercise_sessions_on_exercise_id", using: :btree
   add_index "exercise_sessions", ["user_id"], name: "index_exercise_sessions_on_user_id", using: :btree
+  add_index "exercise_sessions", ["workout_id"], name: "index_exercise_sessions_on_workout_id", using: :btree
 
   create_table "exercises", force: true do |t|
     t.text     "name"
