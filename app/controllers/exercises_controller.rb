@@ -6,7 +6,7 @@ class ExercisesController < ApplicationController
   end
 
   def show
-    @video_id = youtube_search(@exercise.name)
+    @exercise.update!(video_id: youtube_search(@exercise.name)) unless @exercise.video_id
   end
 
   def new
