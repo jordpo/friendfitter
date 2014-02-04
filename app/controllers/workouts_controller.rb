@@ -1,11 +1,12 @@
 class WorkoutsController < ApplicationController
+  before_action :get_workout, only: [:show, :edit, :update, :destroy]
+
   def index
     @workouts = Workout.order(created_at: :desc)
   end
 
   def show
     @exercise = Exercise.new
-    @workout = Workout.find(params[:id])
   end
 
   def new
@@ -24,12 +25,11 @@ class WorkoutsController < ApplicationController
   end
 
   def edit
-    @workout = Workout.find(params[:id])
   end
 
   def update
-    @workout = Workout.find(params[:id])
     @workout.assign_attributes(workout_params)
+    # Reset exercises array in order to update
     @workout.exercises = []
     exercises = params[:workout][:exercise_ids]
     exercises.reject! { |c| c.empty? }
@@ -46,7 +46,6 @@ class WorkoutsController < ApplicationController
   end
 
   def destroy
-    @workout = Workout.find(params[:id])
     @workout.delete
     redirect_to root_path
   end
@@ -58,4 +57,7 @@ class WorkoutsController < ApplicationController
     params.require(:workout).permit(:name, :difficulty, :posted, :started)
   end
 
+  def get_workout
+    @workout = Workout.find(params[:id])
+  end
 end
