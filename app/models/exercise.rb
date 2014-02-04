@@ -16,4 +16,12 @@ class Exercise < ActiveRecord::Base
   has_many :exercise_sessions
   # has_many :users, through: :exercise_sessions
 
+
+  def active?
+    self.workouts.each do |workout|
+      workout.workout_sessions.each do |x|
+        return true if x.accomplished?
+      end
+    end
+  end
 end

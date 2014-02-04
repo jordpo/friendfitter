@@ -26,6 +26,7 @@ class Workout < ActiveRecord::Base
       my_workouts << x.workout unless x.accomplished?
     end
     my_workouts.sort_by! { |x| x.created_at }
+    my_workouts.reverse
   end
 
   def self.my_workouts_completed(user)
@@ -34,6 +35,7 @@ class Workout < ActiveRecord::Base
       my_workouts << x.workout if x.accomplished?
     end
     my_workouts.sort_by! { |x| x.created_at }
+    my_workouts.reverse
   end
 
   def self.other_workouts(user)

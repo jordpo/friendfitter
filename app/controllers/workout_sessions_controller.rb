@@ -4,6 +4,8 @@ def create
   session = WorkoutSession.new(workout_session_params)
   current_user.workout_sessions << session
   workout = Workout.find(workout_session_params[:workout_id])
+  # Make sure workout.status is true
+  workout.update!(started: true)
   # Create user exercise_sessions for all current exercises linked to this workout
   workout.exercises.each do |exercise|
     current_user.exercise_sessions << ExerciseSession.new(
