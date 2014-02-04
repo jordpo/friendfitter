@@ -14,7 +14,7 @@ def update
 end
 
 def destroy
-  workout_session.find(params[:id]).destroy!
+  WorkoutSession.find(params[:id]).destroy!
   redirect_to :back
 end
 

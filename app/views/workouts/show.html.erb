@@ -30,6 +30,7 @@
         </ul>
         <% if session.user.id == current_user.id %>
           <%= render partial: 'workout_session', locals: {workout_session: session, method: 'put', submit: 'Update'} %>
+          <%= link_to 'Quit Workout', session, method: 'delete', confirm: 'are you sure' %>
         <% end%>
       </li>
     <% end %>
