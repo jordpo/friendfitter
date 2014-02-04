@@ -1,0 +1,7 @@
+<h1>Create a Workout!</h1>
+
+<%= form_for @workout do |f| %>
+<%= f.label :name %><%= f.text_field :name %>
+<%= f.label :difficulty %><%= f.text_field :difficulty %>
+<%= f.submit %>
+<% end %>

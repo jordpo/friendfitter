@@ -4,12 +4,17 @@ class WorkoutsController < ApplicationController
   end
 
   def show
+    @workout = Workout.find(params[:id])
   end
 
   def new
+    @workout = Workout.new
   end
 
   def create
+    @workout = Workout.new(workout_params)
+    current_user.workouts << @workout
+    redirect_to @workout
   end
 
   def edit
