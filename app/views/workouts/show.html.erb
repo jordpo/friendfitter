@@ -28,7 +28,14 @@
           <li>Accomplished: <%= session.accomplished? ? 'Yes' : 'No' %></li>
           <li>Comments: <%= session.comment %></li>
         </ul>
+        <% if session.user.id == current_user.id %>
+          <%= render partial: 'workout_session', locals: {workout_session: session, method: 'put', submit: 'Update'} %>
+        <% end%>
       </li>
     <% end %>
   </ul>
+  <% if !@workout.workout_sessions.map(&:user_id).include?(current_user.id) %>
+    <p>Join the workout!</p>
+    <%= render partial: 'workout_session', locals: {workout_session: @workout_session, method: 'post', submit: 'Join'} %>
+  <% end %>
 </article>
