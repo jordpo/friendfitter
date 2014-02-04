@@ -2,7 +2,12 @@
 
 <section>
   <h1>My Workouts</h1>
-  <% @my_workouts.each do |workout| %>
+  <h2>Pending Workouts</h2>
+  <% @my_workouts_pending.each do |workout| %>
+      <%= render partial: 'workouts', locals: {workout: workout} %>
+  <% end %>
+  <h2>Completed Workouts</h2>
+  <% @my_workouts_completed.each do |workout| %>
       <%= render partial: 'workouts', locals: {workout: workout} %>
   <% end %>
 </section>

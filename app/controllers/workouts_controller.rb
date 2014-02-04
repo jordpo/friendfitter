@@ -2,7 +2,8 @@ class WorkoutsController < ApplicationController
   before_action :get_workout, only: [:show, :edit, :update, :destroy]
 
   def index
-    @my_workouts = Workout.my_workouts(current_user)
+    @my_workouts_pending = Workout.my_workouts_pending(current_user)
+    @my_workouts_completed = Workout.my_workouts_completed(current_user)
     @other_workouts = Workout.other_workouts(current_user)
   end
 
