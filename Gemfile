@@ -32,8 +32,12 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-
+# Devise for user authentication
 gem 'devise'
+
+# Youtube videos and Google api
+gem 'google-api-client', '~> 0.4.3', :require => 'google/api_client'
+gem 'trollop'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'

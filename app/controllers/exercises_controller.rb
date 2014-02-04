@@ -6,6 +6,7 @@ class ExercisesController < ApplicationController
   end
 
   def show
+    @video_id = youtube_search(@exercise.name)
   end
 
   def new
@@ -64,4 +65,39 @@ class ExercisesController < ApplicationController
   def get_exercise
     @exercise = Exercise.find(params[:id])
   end
+
+
+  def youtube_search(keyword)
+    developer_key = ENV["GOOGLE_KEY"]
+    youtube_api_service_name = "youtube"
+    youtube_api_version = "v3"
+
+    opts = Trollop::options do
+        opt :q, 'Search term', :type => String, :default => 'Crossfit'
+        opt :maxResults, 'Max results', :type => :int, :default => 25
+      end
+
+    client = Google::APIClient.new(:key => developer_key,
+                                   :authorization => nil,
+                                   :application_name => 'API Project',
+                                   :application_version => '1.0')
+
+    youtube = client.discovered_api(youtube_api_service_name, youtube_api_version)
+    # Call the search.list method to retrieve results matching the specified
+    # query term.
+    opts[:part], opts[:q] = 'id,snippet', keyword
+    search_response = client.execute!(
+      :api_method => youtube.search.list,
+      :parameters => opts
+    )
+
+    # Sort through the search_response and return video_id of first video
+    search_response.data.items.each do |search_result|
+      if search_result.id.kind == 'youtube#video'
+        return search_result.id.videoId
+        break
+      end
+    end
+  end
+
 end
