@@ -3,7 +3,7 @@
   <ul>
     <li><%= link_to 'Edit Workout', edit_workout_path %></li>
     <li><%= link_to 'Add an Exercise', new_workout_exercise_path(@workout) %></li>
-    <li><%=link_to 'Delete Workout',  @workout, method: 'destroy', confirm: 'Are you sure?' %></li>
+    <li><%=link_to 'Delete Workout',  @workout, method: 'delete', confirm: 'Are you sure?' %></li>
   </ul>
 </nav>
 
