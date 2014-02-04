@@ -2,7 +2,8 @@ class WorkoutsController < ApplicationController
   before_action :get_workout, only: [:show, :edit, :update, :destroy]
 
   def index
-    @workouts = Workout.order(created_at: :desc)
+    @my_workouts = Workout.my_workouts(current_user)
+    @other_workouts = Workout.other_workouts(current_user)
   end
 
   def show
@@ -61,4 +62,5 @@ class WorkoutsController < ApplicationController
   def get_workout
     @workout = Workout.find(params[:id])
   end
+
 end

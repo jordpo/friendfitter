@@ -1,10 +1,13 @@
 <h1><%= @workout.name %></h1>
-<nav>
-  <ul>
-    <li><%= link_to 'Edit Workout', edit_workout_path %></li>
-    <li><%=link_to 'Delete Workout',  @workout, method: 'delete', confirm: 'Are you sure?' %></li>
-  </ul>
-</nav>
+
+<% if current_user == @workout.user %>
+  <nav>
+    <ul>
+      <li><%= link_to 'Edit Workout', edit_workout_path %></li>
+      <li><%=link_to 'Delete Workout',  @workout, method: 'delete', confirm: 'Are you sure?' %></li>
+    </ul>
+  </nav>
+<% end %>
 
 <article>
   <p>Owner: <%= @workout.user.username %></p>
@@ -44,7 +47,7 @@
           <li>Comments: <%= session.comment %></li>
         </ul>
         <% if session.user.id == current_user.id %>
-          <%= render partial: 'workout_session', locals: {workout_session: session, method: 'put', submit: 'Update'} %>
+          <%= render partial: 'workout_session', locals: {workout_session: session, method: 'put', submit: 'Complete'} %>
           <%= link_to 'Quit Workout', session, method: 'delete', confirm: 'are you sure' %>
         <% end%>
       </li>
