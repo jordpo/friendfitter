@@ -29,13 +29,20 @@ class WorkoutsController < ApplicationController
 
   def update
     @workout = Workout.find(params[:id])
-    @workout.update_attributes!(workout_params)
+    @workout.assign_attributes(workout_params)
+    @workout.exercises = []
     exercises = params[:workout][:exercise_ids]
     exercises.reject! { |c| c.empty? }
-    exercises.each do |i|
-      @workout.exercises << Exercise.find(i)
+    if @workout.save
+      exercises.each do |i|
+        @workout.exercises << Exercise.find(i)
+      end
+      flash[:notice] = 'Workout Updated!'
+      redirect_to @workout
+    else
+      flash.new[:errors] = @workout.errors.full_messages.join(', ')
+      render :edit
     end
-    redirect_to @workout
   end
 
   def destroy

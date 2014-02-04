@@ -1,7 +1,7 @@
 <%= form_for @workout do |f| %>
   <%= f.label :name %><%= f.text_field :name %>
   <%= f.label :difficulty %><%= f.text_field :difficulty %>
-  <h3>Add Exercises:</h3>
-  <%= collection_check_boxes(:workout, :exercise_ids, @workout.exercises_to_add, :id, :name) %>
+  <h3>Exercises:</h3>
+  <%= collection_check_boxes(:workout, :exercise_ids, Exercise.all, :id, :name) %>
   <%= f.submit %>
 <% end %>

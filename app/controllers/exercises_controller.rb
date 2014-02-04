@@ -32,6 +32,7 @@ class ExercisesController < ApplicationController
 
   def update
     @exercise = Exercise.find(params[:id])
+    @exercise.workouts = []
     workouts = params[:exercise][:workout_ids]
     workouts.reject! { |c| c.empty? }
     @exercise.assign_attributes(exercise_params)
