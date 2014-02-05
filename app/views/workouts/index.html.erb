@@ -24,7 +24,7 @@
     </section>
   </div>
 
-  <section class="col-md-4">
+  <section class="col-md-4 well">
     <% @other_workouts.each do |workout| %>
         <%= render partial: 'workouts', locals: {workout: workout} %>
     <% end %>
