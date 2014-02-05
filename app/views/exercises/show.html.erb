@@ -1,23 +1,30 @@
-<h1><%= @exercise.name %></h1>
-<% if !@exercise.active? %>
-  <nav>
-    <ul>
-      <li><%= link_to 'Edit Exercise', edit_exercise_path %></li>
-      <li><%= link_to 'Delete Exercise', @exercise, method: 'delete', confirm: 'Are you sure?' %></li>
-    </ul>
-  </nav>
-<% end %>
 
-<article>
+<br><br><br><br>
+<div class="jumbotron">
+  <h1><%= @exercise.name %></h1>
+  <% if !@exercise.active? %>
+    <nav>
+      <ul>
+        <li><%= link_to 'Edit Exercise', edit_exercise_path %></li>
+        <li><%= link_to 'Delete Exercise', @exercise, method: 'delete', confirm: 'Are you sure?' %></li>
+      </ul>
+    </nav>
+  <% end %>
   <p>Detail: <%= @exercise.detail %></p>
   <p>Duration: <%= @exercise.duration %></p>
-  <p>Workouts:</p>
-  <ul>
-    <% @exercise.workouts.each do |workout| %>
-      <li><%= link_to workout.name, workout %></li>
-    <% end %>
-  </ul>
+</div>
 
-  <iframe class="youtube-player" type="text/html" width="640" height="385" src="http://www.youtube.com/embed/<%= @exercise.video_id %>" allowfullscreen frameborder="0">
-  </iframe>
-</article>
+<div class="row">
+  <div class="well col-md-4">
+    <h2>Workouts</h2>
+    <ul>
+      <% @exercise.workouts.each do |workout| %>
+        <li><%= link_to workout.name, workout %></li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="col-md-6">
+    <iframe class="youtube-player" type="text/html" width="640" height="385" src="http://www.youtube.com/embed/<%= @exercise.video_id %>" allowfullscreen frameborder="0">
+    </iframe>
+  </div>
+</div>
