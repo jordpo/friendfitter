@@ -2,30 +2,37 @@
 <html>
 <head>
   <title>FriendFitter</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-<header class="header">
-  <h1>FriendFitter</h1>
-  <nav>
-    <ul>
-        <li><%= link_to 'Workouts', root_path %></li>
-        <li><%= link_to 'New Workout', new_workout_path %></li>
-        <li><%= link_to 'All Exercises', exercises_path %></li>
-        <% if user_signed_in? %>
-          <li><%= link_to 'Edit Profile', edit_user_registration_path %></li>
-          <li><%= link_to 'Sign Out', destroy_user_session_path %></li>
-        <% else %>
-          <li><%= link_to 'Sign In', new_user_session_path %></li>
-        <% end %>
-    </ul>
-  </nav>
-</header>
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
-<div class="container">
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <header class="navbar-header">
+      <h3><%=link_to 'FriendFitter', root_path %></h3>
+    </header>
+    <nav class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+          <li><%= link_to 'Workouts', root_path %></li>
+          <li><%= link_to 'New Workout', new_workout_path %></li>
+          <li><%= link_to 'All Exercises', exercises_path %></li>
+          <% if user_signed_in? %>
+            <li><%= link_to 'Edit Profile', edit_user_registration_path %></li>
+            <li><%= link_to 'Sign Out', destroy_user_session_path, method: 'delete' %></li>
+          <% else %>
+            <li><%= link_to 'Sign In', new_user_session_path %></li>
+          <% end %>
+      </ul>
+    </nav>
+  </div>
+</div>
+  <p class="notice alert-success"><%= notice %></p>
+  <p class="alert alert alert-success"><%= alert %></p>
+  <p class="alert-danger"><%= flash[:errors] %></p>
+<div class="container-fluid">
   <%= yield %>
 </div>
 

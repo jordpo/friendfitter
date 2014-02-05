@@ -1,69 +1,84 @@
-<h1><%= @workout.name %></h1>
-
-<% if current_user == @workout.user && !@workout.started? %>
-  <nav>
-    <ul>
-      <li><%= link_to 'Edit Workout', edit_workout_path %></li>
-      <li><%=link_to 'Delete Workout',  @workout, method: 'delete', confirm: 'Are you sure?' %></li>
-    </ul>
-  </nav>
-<% end %>
-
-<article>
-  <p>Owner: <%= @workout.user.username %></p>
-  <p>Difficulty: <%= @workout.difficulty %></p>
-  <p>Posted Status: <%= @workout.posted? ? 'Posted' : 'Not Posted' %></p>
-  <p>Workout Status: <%= @workout.started? ? 'Started' : 'Not Started' %></p>
-  <p>Exercises:</p>
-  <ol>
-    <% @workout.exercises.each do |exercise| %>
-      <li>
-        <%= link_to exercise.name, exercise %>
-        <% exercise.exercise_sessions.each do |exercise_session| %>
-          <% if exercise_session.workout == @workout %>
-            <ul>
-              <li>User: <%= exercise_session.user.username %></li>
-              <li>Comment: <%= exercise_session.comment %></li>
-              <li>Mod: <%= exercise_session.mod %></li>
-              <li>Accomplished: <%= exercise_session.accomplished %></li>
-              <li>PR: <%= exercise_session.pr %></li>
-            </ul>
-            <% if exercise_session.user == current_user && !exercise_session.accomplished? %>
-              <%= form_for exercise_session, method: 'put' do |f| %>
-              <%= f.label :mod %><%= f.text_field :mod %>
-              <%= f.label :comment %><%= f.text_field :comment %>
-              <%= f.label :pr, 'PR' %><%= f.check_box :pr %>
-              <%= f.hidden_field :accomplished, value: true %>
-              <%= f.submit 'Did it!' %>
-              <% end %>
-            <% end %>
-            <br>
-          <% end %>
-        <% end %>
-      </li>
-    <% end %>
-  </ol>
-  <p>Participants:</p>
-  <ul>
-    <% @workout.workout_sessions.each do |session| %>
-      <li>
-        <%= session.user.username %>
-        <ul>
-          <li>PR: <%= session.pr? ? 'Yes' : 'No' %></li>
-          <li>Accomplished: <%= session.accomplished? ? 'Yes' : 'No' %></li>
-          <li>Comments: <%= session.comment %></li>
-        </ul>
-        <% if session.user.id == current_user.id %>
-          <% if !session.accomplished? %>
-            <%= render partial: 'workout_session', locals: {workout_session: session, method: 'put', submit: 'Complete'} %>
-            <%= link_to 'Quit Workout', session, method: 'delete', confirm: 'are you sure' %>
-          <% end %>
-        <% end%>
-      </li>
-    <% end %>
-  </ul>
-  <% if !@workout.workout_sessions.map(&:user_id).include?(current_user.id) %>
-    <p>Join the workout!</p>
-    <%= render partial: 'workout_session', locals: {workout_session: @workout_session, method: 'post', submit: 'Join'} %>
+<div class="row">
+  <h1><%= @workout.name %></h1>
+</div>
+<div class="row">
+  <% if current_user == @workout.user && !@workout.started? %>
+    <div class="col-md-4"></div>
+    <nav class="col-md-4">
+      <ul class="nav nav-pills nav-justified">
+        <li><%= link_to 'Edit Workout', edit_workout_path %></li>
+        <li><%=link_to 'Delete Workout',  @workout, method: 'delete', confirm: 'Are you sure?' %></li>
+      </ul>
+    </nav>
   <% end %>
-</article>
+</div>
+<div class="row">
+  <div class="col-md-3"></div>
+  <article class="jumbotron col-md-6 workout_show">
+    <p>Owner: <%= @workout.user.username %></p>
+    <p>Difficulty: <%= @workout.difficulty %></p>
+    <p>Posted Status: <%= @workout.posted? ? 'Posted' : 'Not Posted' %></p>
+    <p>Workout Status: <%= @workout.started? ? 'Started' : 'Not Started' %></p>
+    <p>Exercises:</p>
+    <ol>
+      <% @workout.exercises.each do |exercise| %>
+        <li>
+          <%= link_to exercise.name, exercise %>
+          <% exercise.exercise_sessions.each do |exercise_session| %>
+            <% if exercise_session.workout == @workout %>
+              <table class="table-striped table">
+                <tr>
+                  <th>User</th>
+                  <th>Comment</th>
+                  <th>Mode</th>
+                  <th>Accomplished</th>
+                  <th>PR</th>
+                </tr>
+                <tr>
+                  <td><%= exercise_session.user.username %></td>
+                  <td><%= exercise_session.comment %></td>
+                  <td><%= exercise_session.mod %></td>
+                  <td><%= exercise_session.accomplished %></td>
+                  <td><%= exercise_session.pr %></td>
+                </tr>
+              </table>
+              <% if exercise_session.user == current_user && !exercise_session.accomplished? %>
+                <%= form_for exercise_session, method: 'put' do |f| %>
+                <%= f.label :mod %><%= f.text_field :mod %>
+                <%= f.label :comment %><%= f.text_field :comment %>
+                <%= f.label :pr, 'PR' %><%= f.check_box :pr %>
+                <%= f.hidden_field :accomplished, value: true %>
+                <%= f.submit 'Did it!' %>
+                <% end %>
+              <% end %>
+              <br>
+            <% end %>
+          <% end %>
+        </li>
+      <% end %>
+    </ol>
+    <p>Participants:</p>
+    <ul>
+      <% @workout.workout_sessions.each do |session| %>
+        <li>
+          <%= session.user.username %>
+          <ul>
+            <li>PR: <%= session.pr? ? 'Yes' : 'No' %></li>
+            <li>Accomplished: <%= session.accomplished? ? 'Yes' : 'No' %></li>
+            <li>Comments: <%= session.comment %></li>
+          </ul>
+          <% if session.user.id == current_user.id %>
+            <% if !session.accomplished? %>
+              <%= render partial: 'workout_session', locals: {workout_session: session, method: 'put', submit: 'Complete'} %>
+              <%= link_to 'Quit Workout', session, method: 'delete', confirm: 'are you sure' %>
+            <% end %>
+          <% end%>
+        </li>
+      <% end %>
+    </ul>
+    <% if !@workout.workout_sessions.map(&:user_id).include?(current_user.id) %>
+      <p>Join the workout!</p>
+      <%= render partial: 'workout_session', locals: {workout_session: @workout_session, method: 'post', submit: 'Join'} %>
+    <% end %>
+  </article>
+</div>

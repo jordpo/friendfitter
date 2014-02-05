@@ -1,21 +1,29 @@
-<h1>Workouts</h1>
+<div class="row">
+  <div class="col-md-8">
+    <h1>My Workouts</h1>
+  </div>
+  <div class="col-md-4">
+    <h1>Other Workouts</h1>
+  </div>
+</div>
 
-<section>
-  <h1>My Workouts</h1>
-  <h2>Pending Workouts</h2>
-  <% @my_workouts_pending.each do |workout| %>
-      <%= render partial: 'workouts', locals: {workout: workout} %>
-  <% end %>
-  <h2>Completed Workouts</h2>
-  <% @my_workouts_completed.each do |workout| %>
-      <%= render partial: 'workouts', locals: {workout: workout} %>
-  <% end %>
-</section>
+<div class="row">
+  <section class="col-md-4">
+    <h2>Pending Workouts</h2>
+    <% @my_workouts_pending.each do |workout| %>
+        <%= render partial: 'workouts', locals: {workout: workout} %>
+    <% end %>
+  </section>
+  <section class="col-md-4">
+    <h2>Completed Workouts</h2>
+    <% @my_workouts_completed.each do |workout| %>
+        <%= render partial: 'workouts', locals: {workout: workout} %>
+    <% end %>
+  </section>
 
-<section>
-  <h1>Other Workouts</h1>
-  <% @other_workouts.each do |workout| %>
-      <%= render partial: 'workouts', locals: {workout: workout} %>
-  <% end %>
-</section>
-
+  <section class="col-md-4">
+    <% @other_workouts.each do |workout| %>
+        <%= render partial: 'workouts', locals: {workout: workout} %>
+    <% end %>
+  </section>
+</div>

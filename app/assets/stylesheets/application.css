@@ -11,3 +11,17 @@
  *= require_self
  *= require_tree .
  */
+
+h1,h2 {
+  text-align: center;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+body {
+  background-image:url('background.jpg');
+  background-repeat:no-repeat;
+  background-size:cover;
+}

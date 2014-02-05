@@ -1,22 +1,22 @@
-<article>
-  <h2><%= link_to workout.name, workout %></h2>
-  <p>Owner: <%= workout.user.username %></p>
-  <p>Mantra: <%= workout.user.mantra %></p>
-  <p>Difficulty: <%= workout.difficulty %></p>
-  <p>Posted Status: <%= workout.posted? ? 'Posted' : 'Not Posted' %></p>
-  <p>Workout Status: <%= workout.started? ? 'Started' : 'Not Started' %></p>
-  <p>Participants:</p>
-  <ul>
-    <% workout.workout_sessions.each do |session| %>
-      <li>
-        <%= session.user.username %>
-        <ul>
-          <li>PR: <%= session.pr? ? 'Yes' : 'No' %></li>
-          <li>Accomplished: <%= session.accomplished? ? 'Yes' : 'No' %></li>
-          <li>Comments: <%= session.comment %></li>
-        </ul>
-      </li>
-    <% end %>
-  </ul>
-  <p>************************</p>
-</article>
+<%= link_to workout_path(workout) do %>
+  <article class="well workout_link">
+    <h2><%= workout.name %></h2>
+    <p>Owner: <%= workout.user.username %></p>
+    <p>Mantra: <%= workout.user.mantra %></p>
+    <p>Difficulty: <%= workout.difficulty %></p>
+    <p>Workout Status: <%= workout.started? ? 'Started' : 'Not Started' %></p>
+    <p>Participants:</p>
+    <ul>
+      <% workout.workout_sessions.each do |session| %>
+        <li>
+          <%= session.user.username %>
+          <ul>
+            <li>PR: <%= session.pr? ? 'Yes' : 'No' %></li>
+            <li>Accomplished: <%= session.accomplished? ? 'Yes' : 'No' %></li>
+            <li>Comments: <%= session.comment %></li>
+          </ul>
+        </li>
+      <% end %>
+    </ul>
+  </article>
+<% end %>

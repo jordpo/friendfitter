@@ -1,3 +1,22 @@
 // Place all the styles related to the Workouts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.workout_link {
+  color: #000;
+  border: 2px solid #FFF;
+}
+
+.workout_link:hover {
+  border: 2px solid #000;
+}
+
+.workout_show p {
+  text-align: center
+}
+
+
+body {
+  background: #FFF;
+}
