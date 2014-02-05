@@ -40,6 +40,8 @@ group :production do
   gem 'rails_12factor'
 end
 
+gem 'dotenv'
+
 # Youtube videos and Google api
 gem 'google-api-client', '~> 0.4.3', :require => 'google/api_client'
 gem 'trollop'
