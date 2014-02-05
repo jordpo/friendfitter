@@ -35,6 +35,11 @@ end
 # Devise for user authentication
 gem 'devise'
 
+# Heroku deployment
+group :production do
+  gem 'rails_12factor'
+end
+
 # Youtube videos and Google api
 gem 'google-api-client', '~> 0.4.3', :require => 'google/api_client'
 gem 'trollop'
@@ -67,3 +72,5 @@ group :development do
   gem 'binding_of_caller'
   gem 'meta_request'
 end
+
+ruby '2.0.0'
