@@ -25,3 +25,11 @@ body {
   background-repeat:no-repeat;
   background-size:cover;
 }
+
+.left {
+  text-align: left;
+}
+
+th {
+  text-align: center;
+}

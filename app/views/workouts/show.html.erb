@@ -1,9 +1,9 @@
-<div class="row">
-  <h1><%= @workout.name %></h1>
-</div>
-<div class="row">
+<div class="jumbotron">
+  <h1 class="left"><%= @workout.name %></h1>
+  <p>Owner: <%= @workout.user.username %> |
+  Difficulty: <%= @workout.difficulty %> |
+  Workout Status: <%= @workout.started? ? 'Started' : 'Not Started' %></p>
   <% if current_user == @workout.user && !@workout.started? %>
-    <div class="col-md-4"></div>
     <nav class="col-md-4">
       <ul class="nav nav-pills nav-justified">
         <li><%= link_to 'Edit Workout', edit_workout_path %></li>
@@ -13,72 +13,93 @@
   <% end %>
 </div>
 <div class="row">
-  <div class="col-md-3"></div>
-  <article class="jumbotron col-md-6 workout_show">
-    <p>Owner: <%= @workout.user.username %></p>
-    <p>Difficulty: <%= @workout.difficulty %></p>
-    <p>Posted Status: <%= @workout.posted? ? 'Posted' : 'Not Posted' %></p>
-    <p>Workout Status: <%= @workout.started? ? 'Started' : 'Not Started' %></p>
-    <p>Exercises:</p>
+  <article class="col-md-6 workout_show">
+    <h2>Exercises</h2>
     <ol>
       <% @workout.exercises.each do |exercise| %>
         <li>
           <%= link_to exercise.name, exercise %>
-          <% exercise.exercise_sessions.each do |exercise_session| %>
-            <% if exercise_session.workout == @workout %>
-              <table class="table-striped table">
-                <tr>
-                  <th>User</th>
-                  <th>Comment</th>
-                  <th>Mode</th>
-                  <th>Accomplished</th>
-                  <th>PR</th>
-                </tr>
+          <table class="table-striped table">
+            <tr>
+              <th>User</th>
+              <th>Comment</th>
+              <th>Mod</th>
+              <th>Done</th>
+              <th>PR</th>
+            </tr>
+            <% exercise.exercise_sessions.each do |exercise_session| %>
+              <% if exercise_session.workout == @workout %>
                 <tr>
                   <td><%= exercise_session.user.username %></td>
                   <td><%= exercise_session.comment %></td>
                   <td><%= exercise_session.mod %></td>
-                  <td><%= exercise_session.accomplished %></td>
-                  <td><%= exercise_session.pr %></td>
+                  <td>
+                    <% if exercise_session.accomplished? %>
+                      <span class="glyphicon glyphicon-ok"></span>
+                      <% end %>
+                  </td>
+                  <td>
+                    <% if exercise_session.pr? %>
+                      <span class="glyphicon glyphicon-star"></span>
+                    <% end %>
+                  </td>
                 </tr>
-              </table>
-              <% if exercise_session.user == current_user && !exercise_session.accomplished? %>
-                <%= form_for exercise_session, method: 'put' do |f| %>
-                <%= f.label :mod %><%= f.text_field :mod %>
-                <%= f.label :comment %><%= f.text_field :comment %>
-                <%= f.label :pr, 'PR' %><%= f.check_box :pr %>
+            <% end %>
+          <% end %>
+          </table>
+          <% exercise.exercise_sessions.each do |exercise_session| %>
+            <% if exercise_session.workout == @workout && exercise_session.user == current_user && !exercise_session.accomplished? %>
+              <%= form_for exercise_session, method: 'put', html: {class: 'form-inline'} do |f| %>
+                <div class="form-group"><%= f.label :mod, class: 'sr-only' %><%= f.text_field :mod, class: 'form-control', placeholder: 'Modification' %></div>
+                <div class="form-group"><%= f.label :comment, class: 'sr-only' %><%= f.text_field :comment, class: 'form-control', placeholder: 'Comment' %></div>
+                <div class="checkbox"><%= f.label :pr,  'PR' %> <%= f.check_box :pr %></div>
                 <%= f.hidden_field :accomplished, value: true %>
-                <%= f.submit 'Did it!' %>
-                <% end %>
+                <%= f.submit 'Did it!', class: 'btn btn-default' %>
+                <br><br>
               <% end %>
-              <br>
             <% end %>
           <% end %>
         </li>
       <% end %>
     </ol>
-    <p>Participants:</p>
-    <ul>
-      <% @workout.workout_sessions.each do |session| %>
-        <li>
-          <%= session.user.username %>
-          <ul>
-            <li>PR: <%= session.pr? ? 'Yes' : 'No' %></li>
-            <li>Accomplished: <%= session.accomplished? ? 'Yes' : 'No' %></li>
-            <li>Comments: <%= session.comment %></li>
-          </ul>
-          <% if session.user.id == current_user.id %>
-            <% if !session.accomplished? %>
-              <%= render partial: 'workout_session', locals: {workout_session: session, method: 'put', submit: 'Complete'} %>
-              <%= link_to 'Quit Workout', session, method: 'delete', confirm: 'are you sure' %>
-            <% end %>
-          <% end%>
-        </li>
-      <% end %>
-    </ul>
     <% if !@workout.workout_sessions.map(&:user_id).include?(current_user.id) %>
       <p>Join the workout!</p>
       <%= render partial: 'workout_session', locals: {workout_session: @workout_session, method: 'post', submit: 'Join'} %>
+    <% end %>
+  </article>
+  <article class="col-md-6">
+    <h2>Participants</h2>
+    <table class="table-striped table">
+      <tr>
+        <th>User</th>
+        <th>Comment</th>
+        <th>Done</th>
+        <th>PR</th>
+      </tr>
+      <% @workout.workout_sessions.each do |session| %>
+        <tr>
+          <td><%= session.user.username %></td>
+          <td><%= session.comment %></td>
+          <td>
+            <% if session.accomplished? %>
+              <span class="glyphicon glyphicon-ok"></span>
+            <% end %>
+          </td>
+          <td>
+            <% if session.pr? %>
+              <span class="glyphicon glyphicon-star"></span>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+      <% @workout.workout_sessions.each do |session| %>
+        <% if session.user.id == current_user.id %>
+          <% if !session.accomplished? %>
+            <%= render partial: 'workout_session', locals: {workout_session: session, method: 'put', submit: 'Complete'} %>
+            <%= link_to 'Quit Workout', session, method: 'delete', confirm: 'are you sure' %>
+          <% end %>
+        <% end%>
     <% end %>
   </article>
 </div>

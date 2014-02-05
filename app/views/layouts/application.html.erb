@@ -5,6 +5,7 @@
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
@@ -14,7 +15,7 @@
     <header class="navbar-header">
       <h3><%=link_to 'FriendFitter', root_path %></h3>
     </header>
-    <nav class="navbar-collapse collapse">
+    <nav>
       <ul class="nav navbar-nav">
           <li><%= link_to 'Workouts', root_path %></li>
           <li><%= link_to 'New Workout', new_workout_path %></li>
@@ -29,9 +30,27 @@
     </nav>
   </div>
 </div>
-  <p class="notice alert-success"><%= notice %></p>
-  <p class="alert alert alert-success"><%= alert %></p>
-  <p class="alert-danger"><%= flash[:errors] %></p>
+<% if notice || alert || flash[:errors] %>
+  <br><br><br><br>
+  <div class="container">
+    <% if notice %>
+    <div class="alert alert-success my_alert">
+      <p><%= notice %></p>
+    </div>
+    <% end %>
+    <% if alert %>
+    <div class="alert alert-warning my_alert">
+      <p><%= alert %></p>
+    </div>
+    <% end %>
+    <% if flash[:errors] %>
+    <div class="alert alert-danger my_alert">
+      <p><%= flash[:errors] %></p>
+    </div>
+    <% end %>
+  </div>
+<% end %>
+
 <div class="container-fluid">
   <%= yield %>
 </div>
