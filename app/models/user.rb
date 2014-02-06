@@ -33,6 +33,10 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :communities
   # has_many :exercises, through: :exercise_sessions
 
+  # username validation
+  validates :username, presence: true
+
+  # omniauth helper methods
   def self.from_omniauth(auth)
     where(auth.slice(:provider, :uid)).first_or_create do |user|
       user.provider = auth.provider
