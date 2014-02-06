@@ -6,7 +6,6 @@ class ExercisesController < ApplicationController
   end
 
   def show
-    @exercise.video_id
   end
 
   def new
@@ -15,6 +14,8 @@ class ExercisesController < ApplicationController
 
   def create
     @exercise = Exercise.new(exercise_params)
+    video_id = youtube_search(exercise_params[:name])
+    @exercise.assign_attributes(video_id: video_id)
     workouts = params[:exercise][:workout_ids]
     workouts.reject! { |c| c.empty? }
     if @exercise.save

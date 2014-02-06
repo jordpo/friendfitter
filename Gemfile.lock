@@ -60,6 +60,8 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     dotenv (0.9.0)
+    dotenv-rails (0.9.0)
+      dotenv (= 0.9.0)
     erubis (2.7.0)
     execjs (2.0.2)
     extlib (0.9.16)
@@ -194,7 +196,7 @@ DEPENDENCIES
   chronic
   coffee-rails (~> 4.0.0)
   devise
-  dotenv
+  dotenv-rails
   faker
   google-api-client (~> 0.4.3)
   jbuilder (~> 1.2)
