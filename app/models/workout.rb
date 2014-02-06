@@ -21,7 +21,13 @@ class Workout < ActiveRecord::Base
   # has_many :followers, through: :workout_sessions, source: :user
   has_and_belongs_to_many :exercises
 
+  # Validations
+  validates :name, presence: true
+  validates :difficulty, presence: true
+  validates :user_id, presence: true
+  validates :community_id, presence: true
 
+  # Model helper functions
   def self.my_workouts_pending(user)
     my_workouts = []
     user.workout_sessions.each do |x|
