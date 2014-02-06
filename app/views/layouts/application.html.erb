@@ -15,7 +15,7 @@
     <header class="navbar-header">
       <h3><%=link_to 'FriendFitter', root_path %></h3>
     </header>
-    <nav>
+    <nav class="">
       <ul class="nav navbar-nav">
           <li><%= link_to 'Workouts', root_path %></li>
           <li><%= link_to 'New Workout', new_workout_path %></li>
@@ -32,7 +32,6 @@
   </div>
 </div>
 <% if notice || alert || flash[:errors] %>
-  <br><br><br><br>
   <div class="container">
     <% if notice %>
     <div class="alert alert-success my_alert">
