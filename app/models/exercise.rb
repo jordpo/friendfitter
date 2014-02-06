@@ -17,7 +17,11 @@ class Exercise < ActiveRecord::Base
   has_many :exercise_sessions
   # has_many :users, through: :exercise_sessions
 
+  # Validations
+  validates :name, presence: true
+  validates :detail, presence: true, length: { maximum: 160 }
 
+  # Helper function - not sure I will user this for v1
   def active?
     self.workouts.each do |workout|
       workout.workout_sessions.each do |x|

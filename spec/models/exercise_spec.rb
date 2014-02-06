@@ -12,3 +12,14 @@
 #  video_id   :text
 #
 
+require 'spec_helper'
+
+describe Exercise do
+  it 'has a valid factory' do
+    exercise = FactoryGirl.create(:exercise)
+    expect(exercise).to be_valid
+  end
+  it 'is invalid without a name'
+  it 'is invalid without a detail'
+  it 'is invalid without a video_id'
+end
