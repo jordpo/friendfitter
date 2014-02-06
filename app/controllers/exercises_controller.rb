@@ -6,7 +6,6 @@ class ExercisesController < ApplicationController
   end
 
   def show
-    raise
     @exercise.update!(video_id: youtube_search(@exercise.name)) unless @exercise.video_id
   end
 
