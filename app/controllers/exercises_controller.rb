@@ -39,6 +39,8 @@ class ExercisesController < ApplicationController
     workouts = params[:exercise][:workout_ids]
     workouts.reject! { |c| c.empty? }
     @exercise.assign_attributes(exercise_params)
+    video_id = youtube_search(exercise_params[:name])
+    @exercise.assign_attributes(video_id: video_id)
     if @exercise.save
       workouts.each do |i|
         @exercise.workouts << Workout.find(i)

@@ -2,16 +2,14 @@
 <br><br><br><br>
 <div class="jumbotron">
   <h1><%= @exercise.name %></h1>
-  <% if !@exercise.active? %>
-    <nav>
-      <ul>
-        <li><%= link_to 'Edit Exercise', edit_exercise_path %></li>
-        <li><%= link_to 'Delete Exercise', @exercise, method: 'delete', confirm: 'Are you sure?' %></li>
-      </ul>
-    </nav>
-  <% end %>
   <p>Detail: <%= @exercise.detail %></p>
   <p>Duration: <%= @exercise.duration %></p>
+  <nav>
+    <ul>
+      <li><%= link_to 'Edit Exercise', edit_exercise_path %></li>
+      <li><%= link_to 'Delete Exercise', @exercise, method: 'delete', confirm: 'Are you sure?' %></li>
+    </ul>
+  </nav>
 </div>
 
 <div class="row">
