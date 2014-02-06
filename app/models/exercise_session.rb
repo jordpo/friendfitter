@@ -10,6 +10,7 @@
 #  mod          :text
 #  accomplished :boolean
 #  status       :text
+#  workout_id   :integer
 #
 
 class ExerciseSession < ActiveRecord::Base

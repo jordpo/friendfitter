@@ -11,10 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140206151115) do
+ActiveRecord::Schema.define(version: 20140206165706) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "communities", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "communities_users", id: false, force: true do |t|
+    t.integer "community_id", null: false
+    t.integer "user_id",      null: false
+  end
+
+  add_index "communities_users", ["community_id", "user_id"], name: "index_communities_users_on_community_id_and_user_id", using: :btree
+  add_index "communities_users", ["user_id", "community_id"], name: "index_communities_users_on_user_id_and_community_id", using: :btree
 
   create_table "exercise_sessions", force: true do |t|
     t.integer "exercise_id"
@@ -92,8 +107,10 @@ ActiveRecord::Schema.define(version: 20140206151115) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "community_id"
   end
 
+  add_index "workouts", ["community_id"], name: "index_workouts_on_community_id", using: :btree
   add_index "workouts", ["user_id"], name: "index_workouts_on_user_id", using: :btree
 
 end

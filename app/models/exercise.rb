@@ -9,6 +9,7 @@
 #  workout_id :integer
 #  created_at :datetime
 #  updated_at :datetime
+#  video_id   :text
 #
 
 class Exercise < ActiveRecord::Base

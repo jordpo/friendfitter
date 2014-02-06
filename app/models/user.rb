@@ -17,6 +17,8 @@
 #  mantra                 :text
 #  created_at             :datetime
 #  updated_at             :datetime
+#  provider               :string(255)
+#  uid                    :string(255)
 #
 
 class User < ActiveRecord::Base
@@ -28,6 +30,7 @@ class User < ActiveRecord::Base
   has_many :workout_sessions
   has_many :exercise_sessions
   has_many :workouts
+  has_and_belongs_to_many :communities
   # has_many :exercises, through: :exercise_sessions
 
   def self.from_omniauth(auth)

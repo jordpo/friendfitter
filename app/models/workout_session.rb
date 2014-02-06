@@ -8,7 +8,6 @@
 #  pr           :boolean
 #  comment      :text
 #  accomplished :boolean
-#  status       :text
 #
 
 class WorkoutSession < ActiveRecord::Base
