@@ -5,6 +5,7 @@ class WorkoutsController < ApplicationController
     @my_workouts_pending = Workout.my_workouts_pending(current_user)
     @my_workouts_completed = Workout.my_workouts_completed(current_user)
     @other_workouts = Workout.other_workouts(current_user)
+    @communities = Community.all
   end
 
   def show
@@ -13,18 +14,24 @@ class WorkoutsController < ApplicationController
   end
 
   def new
+    @community = Community.find(params[:id])
     @workout = Workout.new
   end
 
   def create
-    @workout = Workout.new(workout_params)
-    current_user.workouts << @workout
+    @workout = current_user.workouts.new(workout_params)
     exercises = params[:workout][:exercise_ids]
     exercises.reject! { |c| c.empty? }
-    exercises.each do |i|
-      @workout.exercises << Exercise.find(i)
+    if @workout.save
+      exercises.each do |i|
+        @workout.exercises << Exercise.find(i)
+      end
+      flash[:notice] = 'Workout saved!'
+      redirect_to @workout
+    else
+      flash.now[:errors] = @workout.errors.full_messages.join(', ')
+      render :new
     end
-    redirect_to @workout
   end
 
   def edit
@@ -57,7 +64,7 @@ class WorkoutsController < ApplicationController
   private
 
   def workout_params
-    params.require(:workout).permit(:name, :difficulty, :posted, :started)
+    params.require(:workout).permit(:name, :difficulty, :posted, :started, :community_id)
   end
 
   def get_workout

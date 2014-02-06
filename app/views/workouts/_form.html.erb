@@ -7,5 +7,6 @@
       <div class="checkbox"><%= b.label %><%= b.label { b.check_box } %></div>
     <% end %>
   </div>
+  <%= f.hidden_field :community_id, value: @community.id %>
   <div class="form-group"><%= f.submit 'Create', class: 'btn btn-default' %></div>
 <% end %>

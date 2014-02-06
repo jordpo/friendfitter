@@ -15,4 +15,12 @@ class Community < ActiveRecord::Base
   validates :name, presence: true
   validates :description, presence: true, length: { maximum: 160 }
 
+  # Helper methods
+  def members_count
+    self.users.count
+  end
+
+  def workouts_count
+    self.workouts.count
+  end
 end

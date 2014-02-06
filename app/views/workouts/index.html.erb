@@ -21,6 +21,24 @@
   </div>
 
   <section class="col-md-4 well">
+    <article>
+      <h1>Communities</h1>
+      <%= button_to 'Create a community', new_community_path, class: 'btn btn-default', method: 'get' %><br>
+      <table class="table-bordered table-condensed table">
+        <tr>
+          <th>Name</th>
+          <th>Members</th>
+          <th>Workouts</th>
+        </tr>
+        <% @communities.each do |community| %>
+          <tr>
+            <td><%= link_to community.name, community %></td>
+            <td><%= community.members_count %></td>
+            <td><%= community.workouts_count %></td>
+          </tr>
+        <% end %>
+      </table>
+    </article>
     <h1>Other Workouts</h1>
     <% @other_workouts.each do |workout| %>
         <%= render partial: 'workouts', locals: {workout: workout} %>

@@ -1,6 +1,9 @@
 <div class="jumbotron">
   <h1><%= @community.name %></h1>
   <p><%= @community.description %></p>
+  <%= button_to 'Join community', member_create_path(@community) , class: 'btn btn-default' %>
+  <!-- Can't add a workout unless they are a member -->
+  <%= link_to 'Add a workout', new_workout_path(@community), class: 'btn btn-default' %>
 </div>
 
 <div class="row well">
@@ -16,20 +19,16 @@
         </tr>
         <% @community.users.each do |user| %>
           <tr>
-            <td><%= link_to user.name, user %></td>
+            <td><%= user.username %></td>
             <td><%= user.mantra %></td>
-            <td><%= user.finished_count %>
-                <span class="glyphicon glyphicon-ok"></span>
-            </td>
-            <td><%= user.pr_count %>
-                <span class="glyphicon glyphicon-star"></span>
-            </td>
+            <td><%= user.finished_count %></td>
+            <td><%= user.pr_count %></td>
           </tr>
-        <% end%>
+        <% end %>
       </table>
     </article>
   </section>
-  <section>
+  <section class="col-md-6">
     <h2>Workouts</h2>
     <article>
       <table class="table-bordered table-condensed table">
@@ -44,7 +43,7 @@
             <td><%= workout.difficulty %></td>
             <td><%= workout.started? ? 'Yes' : 'No' %></td>
           </tr>
-        <% end%>
+        <% end %>
       </table>
     </article>
   </section>

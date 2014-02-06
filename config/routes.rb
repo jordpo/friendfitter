@@ -1,7 +1,10 @@
 FriendFitter::Application.routes.draw do
 
+  # Join a community
+  post '/members/create/:id' => 'members#create', as: 'member_create'
   resources :communities
-  resources :workouts
+  resources :workouts, except: [:new]
+  get '/workouts/new/:id' => 'workouts#new', as: 'new_workout'
   resources :exercises
   resources :workout_sessions
   resources :exercise_sessions

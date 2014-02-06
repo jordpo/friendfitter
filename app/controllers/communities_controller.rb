@@ -1,5 +1,5 @@
 class CommunitiesController < ApplicationController
-  before_action :get_community, only: {:edit, :update, :show, :destroy}
+  before_action :get_community, only: [:edit, :update, :show, :destroy]
 
   def show
   end
