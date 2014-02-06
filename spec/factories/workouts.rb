@@ -19,7 +19,7 @@ FactoryGirl.define do
   factory :workout do |f|
     f.name { Faker::Name.name }
     f.difficulty { Faker::Name.name }
-    f.user_id 2
-    f.community_id 1
+    f.user FactoryGirl.create(:user)
+    f.community FactoryGirl.create(:community)
   end
 end

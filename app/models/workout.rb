@@ -24,8 +24,8 @@ class Workout < ActiveRecord::Base
   # Validations
   validates :name, presence: true
   validates :difficulty, presence: true
-  validates :user_id, presence: true
-  validates :community_id, presence: true
+  validates :user, presence: true
+  validates :community, presence: true
 
   # Model helper functions
   def self.my_workouts_pending(user)
