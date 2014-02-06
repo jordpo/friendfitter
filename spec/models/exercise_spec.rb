@@ -19,7 +19,16 @@ describe Exercise do
     exercise = FactoryGirl.create(:exercise)
     expect(exercise).to be_valid
   end
-  it 'is invalid without a name'
-  it 'is invalid without a detail'
-  it 'is invalid without a video_id'
+  it 'is invalid without a name' do
+    exercise = FactoryGirl.build(:exercise, name: nil)
+    expect(exercise).to_not be_valid
+  end
+  it 'is invalid without a detail' do
+    exercise = FactoryGirl.build(:exercise, detail: nil)
+    expect(exercise).to_not be_valid
+  end
+  it 'is invalid without a video_id' do
+    exercise = FactoryGirl.build(:exercise, video_id: nil)
+    expect(exercise).to_not be_valid
+  end
 end
