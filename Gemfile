@@ -41,14 +41,14 @@ gem 'omniauth-facebook'
 # For testing
 group :development, :test do
   gem 'rspec-rails'
-  gem 'factory_girl_rails'
+  gem 'faker'
 end
 
 group :test do
-  gem 'faker'
   gem 'capybara'
   gem 'guard-rspec'
   gem 'launchy'
+  gem 'factory_girl_rails'
 end
 
 # Heroku deployment
@@ -81,7 +81,6 @@ group :development do
   gem 'pry-stack_explorer'
   # Add model attributes
   gem 'annotate'
-  gem 'faker'
   gem 'chronic'
   # Turn off verbose logging of asset requests
   gem 'quiet_assets'

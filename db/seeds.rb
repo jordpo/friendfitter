@@ -13,20 +13,21 @@ dess = User.create!(
   password: 'valid_password',
   password_confirmation: 'valid_password')
 
+rvc = Community.new(name: 'RVC', description: 'Upper Valley locals doing crossfit')
+
 workout1 = Workout.new(
   name: 'Workout 1',
   difficulty: 'Medium',
-  posted: false,
-  started: false)
+  started: false,
+  user: jordan,
+  community: rvc)
 
 workout2 = Workout.new(
   name: 'Workout 2',
   difficulty: 'High',
-  posted: true,
-  started: true)
-
-jordan.workouts << workout1
-dess.workouts << workout2
+  started: true,
+  user: dess,
+  community: rvc)
 
 # Exercises
 thruster = Exercise.new(name: 'Thruster', detail: 'Strength - 90 pounds', duration: '3 Rounds of 10')
@@ -41,7 +42,7 @@ workout2.exercises << thruster << russiantwist << boxjumps << toestobar
 
 
 dess.workout_sessions.create!(workout: workout1, pr: false, comment: 'Not bad but did better last time',
-  accomplished: true, status: 'complete')
+  accomplished: true)
 
 dess.exercise_sessions.create!(exercise: backsquat,
   pr: true,
@@ -67,7 +68,7 @@ dess.exercise_sessions.create!(exercise: lunges,
 
 
 jordan.workout_sessions.create!(workout: workout2, pr: true, comment: 'crushed it',
-  accomplished: true, status: 'complete')
+  accomplished: true)
 
 jordan.exercise_sessions.create!(exercise: thruster,
   pr: false,
