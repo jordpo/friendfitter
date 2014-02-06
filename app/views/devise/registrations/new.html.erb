@@ -15,11 +15,13 @@
       <div class="form-group"><%= f.label :mantra %>
       <%= f.text_field :mantra, class: 'form-control', placeholder: 'Mantra' %></div>
 
-      <div class="form-group"><%= f.label :password %>
-      <%= f.password_field :password, class: 'form-control', placeholder: 'Password' %></div>
+      <% if f.object.password_required? %>
+        <div class="form-group"><%= f.label :password %>
+        <%= f.password_field :password, class: 'form-control', placeholder: 'Password' %></div>
 
-      <div class="form-group"><%= f.label :password_confirmation %>
-      <%= f.password_field :password_confirmation, class: 'form-control', placeholder: 'Password Confirmation' %></div>
+        <div class="form-group"><%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation, class: 'form-control', placeholder: 'Password Confirmation' %></div>
+      <% end %>
 
       <div><%= f.submit "Sign up", class: 'btn btn-default' %></div>
     <% end %>
