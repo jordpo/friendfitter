@@ -1,0 +1,51 @@
+<div class="jumbotron">
+  <h1><%= @community.name %></h1>
+  <p><%= @community.description %></p>
+</div>
+
+<div class="row well">
+  <section class="col-md-6 side_border">
+    <h2>Members</h2>
+    <article>
+      <table class="table-bordered table-condensed table">
+        <tr>
+          <th>User</th>
+          <th>Mantra</th>
+          <th>Workouts Completed</th>
+          <th>PRs</th>
+        </tr>
+        <% @community.users.each do |user| %>
+          <tr>
+            <td><%= link_to user.name, user %></td>
+            <td><%= user.mantra %></td>
+            <td><%= user.finished_count %>
+                <span class="glyphicon glyphicon-ok"></span>
+            </td>
+            <td><%= user.pr_count %>
+                <span class="glyphicon glyphicon-star"></span>
+            </td>
+          </tr>
+        <% end%>
+      </table>
+    </article>
+  </section>
+  <section>
+    <h2>Workouts</h2>
+    <article>
+      <table class="table-bordered table-condensed table">
+        <tr>
+          <th>Workout</th>
+          <th>Difficulty</th>
+          <th>Started</th>
+        </tr>
+        <% @community.workouts.each do |workout| %>
+          <tr>
+            <td><%= link_to workout.name, workout %></td>
+            <td><%= workout.difficulty %></td>
+            <td><%= workout.started? ? 'Yes' : 'No' %></td>
+          </tr>
+        <% end%>
+      </table>
+    </article>
+  </section>
+</div>

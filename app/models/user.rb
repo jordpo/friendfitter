@@ -36,6 +36,17 @@ class User < ActiveRecord::Base
   # username validation
   validates :username, presence: true
 
+  # Helper methods
+  def pr_count
+    sum_array = self.workout_sessions.map { |x| x.pr? ? 1 : 0 }
+    sum_array.reduce(:+)
+  end
+
+  def finished_count
+    sum_array = self.workout_sessions.map { |x| x.accomplished? ? 1 : 0 }
+    sum_array.reduce(:+)
+  end
+
   # omniauth helper methods
   def self.from_omniauth(auth)
     where(auth.slice(:provider, :uid)).first_or_create do |user|

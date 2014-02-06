@@ -14,4 +14,5 @@ class Community < ActiveRecord::Base
   has_many :workouts
   validates :name, presence: true
   validates :description, presence: true, length: { maximum: 160 }
+
 end

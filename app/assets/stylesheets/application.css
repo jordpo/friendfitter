@@ -34,3 +34,8 @@ body {
 th {
   text-align: center;
 }
+
+.side_border {
+  border-right: 1px dashed #000;
+}
+

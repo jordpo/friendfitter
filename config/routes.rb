@@ -1,5 +1,6 @@
 FriendFitter::Application.routes.draw do
 
+  resources :communities
   resources :workouts
   resources :exercises
   resources :workout_sessions
