@@ -35,6 +35,9 @@ end
 # Devise for user authentication
 gem 'devise'
 
+# Omniauth gems
+gem 'omniauth-facebook'
+
 # Heroku deployment
 group :production do
   gem 'rails_12factor'
