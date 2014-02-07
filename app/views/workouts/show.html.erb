@@ -70,7 +70,7 @@
       <% end %>
       <%= link_to "Don't see your exercise, create it!", new_exercise_path(@workout) %>
     <% end %><br><br>
-    <% if !@workout.workout_sessions.map(&:user_id).include?(current_user.id) %>
+    <% if !@workout.workout_sessions.map(&:user_id).include?(current_user.id) && current_user.community_member?(@workout.community) %>
       <br><br><p>Join the workout!</p>
       <%= render partial: 'workout_session', locals: {workout_session: @workout_session, method: 'post', submit: 'Join'} %><br><br>
     <% end %>
