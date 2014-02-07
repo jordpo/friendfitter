@@ -1,26 +1,32 @@
-<div class="row">
-  <div class="col-md-8 well">
-    <h1>My Workouts</h1>
-  </div>
+<div class="jumbotron">
+  <h1>My Workouts</h1>
+  <p class="center">Username: <%= current_user.username %> |
+    Mantra: <%= current_user.mantra %></p>
 </div>
 
-<div class="row">
-  <div class="col-md-8">
-    <section class="well">
+<div class="row well">
+  <% if @my_workouts_pending.count > 0 || @my_workouts_completed.count > 0 %>
+    <section class="col-md-4 side_border">
       <h2>Pending Workouts</h2>
       <% @my_workouts_pending.each do |workout| %>
           <%= render partial: 'workouts', locals: {workout: workout} %>
       <% end %>
     </section>
-    <section class="well">
+    <section class="col-md-4">
       <h2>Completed Workouts</h2>
       <% @my_workouts_completed.each do |workout| %>
           <%= render partial: 'workouts', locals: {workout: workout} %>
       <% end %>
     </section>
-  </div>
+  <% else %>
+    <section class="col-md-8 side_border">
+      <h2>Welcome to FriendFitter!</h2>
+      <p class="center">Look to the right and join a Community to start working out.</p>
+      <p class="center">Or if you don't find one, create your own Community!</p>
+    </section>
+  <% end %>
 
-  <section class="col-md-4 well">
+  <section class="col-md-4 side_border_left">
     <article>
       <h1>Communities</h1>
       <%= button_to 'Create a community', new_community_path, class: 'btn btn-default', method: 'get' %><br>
@@ -39,9 +45,11 @@
         <% end %>
       </table>
     </article>
-    <h1>Other Workouts</h1>
+    <h1>New Workouts</h1>
     <% @other_workouts.each do |workout| %>
+      <% if current_user.community_member?(workout.community) %>
         <%= render partial: 'workouts', locals: {workout: workout} %>
+      <% end %>
     <% end %>
   </section>
 </div>

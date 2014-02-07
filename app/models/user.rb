@@ -47,6 +47,18 @@ class User < ActiveRecord::Base
     sum_array.reduce(:+)
   end
 
+  def community_member?(community)
+    self.communities.include?(community)
+  end
+
+  def participating?(workout)
+    # current user has a workout session that points to this workout
+    array = self.workout_sessions.map do |x|
+      x.workout.id == workout.id
+    end
+    array.index(true)
+  end
+
   # omniauth helper methods
   def self.from_omniauth(auth)
     where(auth.slice(:provider, :uid)).first_or_create do |user|

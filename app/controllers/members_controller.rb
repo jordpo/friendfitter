@@ -6,4 +6,10 @@ class MembersController < ApplicationController
     redirect_to community
   end
 
+  def destroy
+    community = Community.find(params[:id])
+    current_user.communities.delete(community)
+    redirect_to community
+  end
+
 end

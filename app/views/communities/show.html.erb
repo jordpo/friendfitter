@@ -1,9 +1,13 @@
 <div class="jumbotron">
   <h1><%= @community.name %></h1>
   <p><%= @community.description %></p>
-  <%= button_to 'Join community', member_create_path(@community) , class: 'btn btn-default' %>
-  <!-- Can't add a workout unless they are a member -->
-  <%= link_to 'Add a workout', new_workout_path(@community), class: 'btn btn-default' %>
+  <% if current_user.community_member?(@community) %>
+    <!-- Can't add a workout unless they are a member -->
+    <%= link_to 'Add a workout', new_workout_path(@community), class: 'btn btn-default' %><br><br>
+    <%= button_to 'Quit community', member_delete_path(@community), method: 'delete', confirm: 'Are you sure?', class: 'btn btn-default' %>
+  <% else %>
+    <%= button_to 'Join community', member_create_path(@community) , class: 'btn btn-default' %>
+  <% end %>
 </div>
 
 <div class="row well">

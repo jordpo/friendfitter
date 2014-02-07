@@ -19,8 +19,14 @@ end
 
 def update
   workout_session = WorkoutSession.find(params[:id])
-  workout_session.update_attributes(workout_session_params)
-  redirect_to :back
+  workout_session.assign_attributes(workout_session_params)
+  if workout_session.save
+    flash[:notice] = 'Workout finished!'
+    redirect_to :back
+  else
+    flash[:errors] = workout_session.errors.full_messages.join(', ')
+    redirect_to :back
+  end
 end
 
 def destroy

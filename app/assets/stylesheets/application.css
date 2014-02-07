@@ -39,3 +39,10 @@ th {
   border-right: 1px dashed #000;
 }
 
+.side_border_left {
+  border-left: 1px dashed #000;
+}
+
+.center {
+  text-align: center;
+}

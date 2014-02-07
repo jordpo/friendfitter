@@ -60,17 +60,21 @@
           <% end %>
         <% end %>
       <% end %>
-    <%= form_for @workout, html: {class: 'form-inline'} do |f| %>
-      <div class="form-group">
-        <%= f.collection_select :exercise_ids, @workout.exercises_to_add, :id, :name %>
-      </div>
-      <%= f.submit 'Add to workout', class: 'btn btn-default' %>
-    <% end %>
-    <%= link_to "Don't see your exercise, create it!", new_exercise_path(@workout) %>
+
+    <% if current_user.participating?(@workout) %>
+      <%= form_for @workout, html: {class: 'form-inline'} do |f| %>
+        <div class="form-group">
+          <%= f.collection_select :exercise_ids, @workout.exercises_to_add, :id, :name, {}, { class: 'form-control'} %>
+        </div>
+        <%= f.submit 'Add to workout', class: 'btn btn-default' %>
+      <% end %>
+      <%= link_to "Don't see your exercise, create it!", new_exercise_path(@workout) %>
+    <% end %><br><br>
     <% if !@workout.workout_sessions.map(&:user_id).include?(current_user.id) %>
-      <p>Join the workout!</p>
-      <%= render partial: 'workout_session', locals: {workout_session: @workout_session, method: 'post', submit: 'Join'} %>
+      <br><br><p>Join the workout!</p>
+      <%= render partial: 'workout_session', locals: {workout_session: @workout_session, method: 'post', submit: 'Join'} %><br><br>
     <% end %>
+
   </article>
   <article class="col-md-5">
     <h2>Participants</h2>
@@ -101,8 +105,8 @@
       <% @workout.workout_sessions.each do |session| %>
         <% if session.user.id == current_user.id %>
           <% if !session.accomplished? %>
-            <%= render partial: 'workout_session', locals: {workout_session: session, method: 'put', submit: 'Complete'} %>
-            <%= link_to 'Quit Workout', session, method: 'delete', confirm: 'are you sure', class: 'btn btn-default' %>
+            <%= render partial: 'workout_session', locals: {workout_session: session, method: 'put', submit: 'Complete'} %><br>
+            <%= link_to 'Quit Workout', session, method: 'delete', confirm: 'Are you sure', class: 'btn btn-default' %><br><br>
           <% end %>
         <% end%>
     <% end %>
