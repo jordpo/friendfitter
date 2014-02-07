@@ -28,6 +28,10 @@ class Workout < ActiveRecord::Base
   validates :community, presence: true
 
   # Model helper functions
+  def exercises_to_add
+    Exercise.all - self.exercises
+  end
+
   def self.my_workouts_pending(user)
     my_workouts = []
     user.workout_sessions.each do |x|

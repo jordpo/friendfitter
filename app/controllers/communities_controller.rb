@@ -1,5 +1,5 @@
 class CommunitiesController < ApplicationController
-  before_action :get_community, only: [:edit, :update, :show, :destroy]
+  before_action :get_community, only: [:edit, :update, :show]
 
   def show
   end
@@ -31,12 +31,6 @@ class CommunitiesController < ApplicationController
       flash.now[:errors] = @community.errors.full_messages.join(', ')
       render :edit
     end
-  end
-
-  def destroy
-    @community.delete!
-    flash[:notice] = 'Community deleted!'
-    redirect_to root_path
   end
 
   private

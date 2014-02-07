@@ -20,12 +20,7 @@ class WorkoutsController < ApplicationController
 
   def create
     @workout = current_user.workouts.new(workout_params)
-    exercises = params[:workout][:exercise_ids]
-    exercises.reject! { |c| c.empty? }
     if @workout.save
-      exercises.each do |i|
-        @workout.exercises << Exercise.find(i)
-      end
       flash[:notice] = 'Workout saved!'
       redirect_to @workout
     else
@@ -35,18 +30,15 @@ class WorkoutsController < ApplicationController
   end
 
   def edit
+    # So that the form can work
+    @community = Community.new
   end
 
   def update
     @workout.assign_attributes(workout_params)
-    # Reset exercises array in order to update
-    @workout.exercises = []
-    exercises = params[:workout][:exercise_ids]
-    exercises.reject! { |c| c.empty? }
+    exercise = Exercise.find(params[:workout][:exercise_ids].to_i)
     if @workout.save
-      exercises.each do |i|
-        @workout.exercises << Exercise.find(i)
-      end
+      @workout.exercises << exercise
       flash[:notice] = 'Workout Updated!'
       redirect_to @workout
     else

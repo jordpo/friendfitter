@@ -1,13 +1,14 @@
 <div class="jumbotron">
   <h1 class="left"><%= @workout.name %></h1>
-  <p>Owner: <%= @workout.user.username %> |
+  <p>Community: <%= link_to @workout.community.name, @workout.community %> |
+  Creator: <%= @workout.user.username %> |
   Difficulty: <%= @workout.difficulty %> |
   Workout Status: <%= @workout.started? ? 'Started' : 'Not Started' %></p>
   <% if current_user == @workout.user && !@workout.started? %>
     <nav class="col-md-4">
       <ul class="nav nav-pills nav-justified">
-        <li><%= link_to 'Edit Workout', edit_workout_path %></li>
-        <li><%=link_to 'Delete Workout',  @workout, method: 'delete', confirm: 'Are you sure?' %></li>
+        <li><%= link_to 'Edit Workout', edit_workout_path, class: 'btn btn-default' %></li>
+        <li><%=link_to 'Delete Workout',  @workout, method: 'delete', confirm: 'Are you sure?', class: 'btn btn-default' %></li>
       </ul>
     </nav>
   <% end %>
@@ -15,53 +16,57 @@
 <div class="row well no_padding">
   <article class="col-md-7 side_border">
     <h2>Exercises</h2>
-    <ol>
-      <% @workout.exercises.each do |exercise| %>
-        <li>
-          <%= link_to exercise.name, exercise %>
-          <table class="table-bordered table-condensed table">
+    <% @workout.exercises.each do |exercise| %>
+      <%= link_to exercise.name, exercise, class: 'btn btn-default' %>
+      <br><br>
+      <table class="table-bordered table-condensed table">
+        <tr>
+          <th>User</th>
+          <th>Comment</th>
+          <th>Mod</th>
+          <th>Done</th>
+          <th>PR</th>
+        </tr>
+        <% exercise.exercise_sessions.each do |exercise_session| %>
+          <% if exercise_session.workout == @workout %>
             <tr>
-              <th>User</th>
-              <th>Comment</th>
-              <th>Mod</th>
-              <th>Done</th>
-              <th>PR</th>
+              <td><%= exercise_session.user.username %></td>
+              <td><%= exercise_session.comment %></td>
+              <td><%= exercise_session.mod %></td>
+              <td>
+                <% if exercise_session.accomplished? %>
+                  <span class="glyphicon glyphicon-ok"></span>
+                <% end %>
+              </td>
+              <td>
+                <% if exercise_session.pr? %>
+                  <span class="glyphicon glyphicon-star"></span>
+                <% end %>
+              </td>
             </tr>
-            <% exercise.exercise_sessions.each do |exercise_session| %>
-              <% if exercise_session.workout == @workout %>
-                <tr>
-                  <td><%= exercise_session.user.username %></td>
-                  <td><%= exercise_session.comment %></td>
-                  <td><%= exercise_session.mod %></td>
-                  <td>
-                    <% if exercise_session.accomplished? %>
-                      <span class="glyphicon glyphicon-ok"></span>
-                      <% end %>
-                  </td>
-                  <td>
-                    <% if exercise_session.pr? %>
-                      <span class="glyphicon glyphicon-star"></span>
-                    <% end %>
-                  </td>
-                </tr>
+          <% end %>
+        <% end %>
+        </table>
+        <% exercise.exercise_sessions.each do |exercise_session| %>
+          <% if exercise_session.workout == @workout && exercise_session.user == current_user && !exercise_session.accomplished? %>
+            <%= form_for exercise_session, method: 'put', html: {class: 'form-inline'} do |f| %>
+              <div class="form-group"><%= f.label :mod, class: 'sr-only' %><%= f.text_field :mod, class: 'form-control', placeholder: 'Modification' %></div>
+              <div class="form-group"><%= f.label :comment, class: 'sr-only' %><%= f.text_field :comment, class: 'form-control', placeholder: 'Comment' %></div>
+              <div class="checkbox"><%= f.label :pr,  'PR' %> <%= f.check_box :pr %></div>
+              <%= f.hidden_field :accomplished, value: true %>
+              <%= f.submit 'Did it!', class: 'btn btn-default' %>
+              <br><br>
             <% end %>
           <% end %>
-          </table>
-          <% exercise.exercise_sessions.each do |exercise_session| %>
-            <% if exercise_session.workout == @workout && exercise_session.user == current_user && !exercise_session.accomplished? %>
-              <%= form_for exercise_session, method: 'put', html: {class: 'form-inline'} do |f| %>
-                <div class="form-group"><%= f.label :mod, class: 'sr-only' %><%= f.text_field :mod, class: 'form-control', placeholder: 'Modification' %></div>
-                <div class="form-group"><%= f.label :comment, class: 'sr-only' %><%= f.text_field :comment, class: 'form-control', placeholder: 'Comment' %></div>
-                <div class="checkbox"><%= f.label :pr,  'PR' %> <%= f.check_box :pr %></div>
-                <%= f.hidden_field :accomplished, value: true %>
-                <%= f.submit 'Did it!', class: 'btn btn-default' %>
-                <br><br>
-              <% end %>
-            <% end %>
-          <% end %>
-        </li>
+        <% end %>
       <% end %>
-    </ol>
+    <%= form_for @workout, html: {class: 'form-inline'} do |f| %>
+      <div class="form-group">
+        <%= f.collection_select :exercise_ids, @workout.exercises_to_add, :id, :name %>
+      </div>
+      <%= f.submit 'Add to workout', class: 'btn btn-default' %>
+    <% end %>
+    <%= link_to "Don't see your exercise, create it!", new_exercise_path(@workout) %>
     <% if !@workout.workout_sessions.map(&:user_id).include?(current_user.id) %>
       <p>Join the workout!</p>
       <%= render partial: 'workout_session', locals: {workout_session: @workout_session, method: 'post', submit: 'Join'} %>
@@ -97,7 +102,7 @@
         <% if session.user.id == current_user.id %>
           <% if !session.accomplished? %>
             <%= render partial: 'workout_session', locals: {workout_session: session, method: 'put', submit: 'Complete'} %>
-            <%= link_to 'Quit Workout', session, method: 'delete', confirm: 'are you sure' %>
+            <%= link_to 'Quit Workout', session, method: 'delete', confirm: 'are you sure', class: 'btn btn-default' %>
           <% end %>
         <% end%>
     <% end %>
