@@ -30,9 +30,9 @@
 </div>
 <% if notice || alert || flash[:errors] %>
   <div class="container">
-    <% if notice %>
+    <% if flash[:notice] %>
     <div class="alert alert-success my_alert">
-      <p><%= notice %></p>
+      <p><%= flash[:notice] %></p>
     </div>
     <% end %>
     <% if alert %>
