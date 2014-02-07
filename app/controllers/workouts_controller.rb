@@ -36,24 +36,34 @@ class WorkoutsController < ApplicationController
 
   def update
     @workout.assign_attributes(workout_params)
-    exercise = Exercise.find(params[:workout][:exercise_ids].to_i)
-    if @workout.save
-      @workout.exercises << exercise
-      # add an exercise session for each user with this workout session
-      participants = @workout.workout_sessions.map do |x|
-        x.user_id
+    if params[:workout][:exercise_ids].to_i != 0
+      exercise = Exercise.find(params[:workout][:exercise_ids].to_i)
+      if @workout.save
+        @workout.exercises << exercise
+        # add an exercise session for each user with this workout session
+        participants = @workout.workout_sessions.map do |x|
+          x.user_id
+        end
+        participants.each do |i|
+          User.find(i).exercise_sessions << ExerciseSession.new(
+            exercise_id: exercise.id,
+            workout_id: @workout.id,
+            status: 'Pending')
+        end
+        flash[:notice] = 'Workout Updated!'
+        redirect_to @workout
+      else
+        flash.new[:errors] = @workout.errors.full_messages.join(', ')
+        render :edit
       end
-      participants.each do |i|
-        User.find(i).exercise_sessions << ExerciseSession.new(
-          exercise_id: exercise.id,
-          workout_id: @workout.id,
-          status: 'Pending')
-      end
-      flash[:notice] = 'Workout Updated!'
-      redirect_to @workout
     else
-      flash.new[:errors] = @workout.errors.full_messages.join(', ')
-      render :edit
+      if @workout.save
+        flash[:notice] = 'Workout Updated!'
+        redirect_to @workout
+      else
+        flash.new[:errors] = @workout.errors.full_messages.join(', ')
+        render :edit
+      end
     end
   end
 
