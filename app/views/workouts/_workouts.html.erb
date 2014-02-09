@@ -8,13 +8,15 @@
       <tr>
         <th>User</th>
         <th>Comment</th>
+        <th>Mods</th>
         <th>Done</th>
         <th>PR</th>
       </tr>
       <% workout.workout_sessions.each do |session| %>
         <tr>
           <td><%= session.user.username %></td>
-          <td>Comments: <%= session.comment %></td>
+          <td><%= session.comment %></td>
+          <td><%= session.mod_count %></td>
           <td>
             <% if session.accomplished? %>
               <span class="glyphicon glyphicon-ok"></span>

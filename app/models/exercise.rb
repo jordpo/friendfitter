@@ -19,7 +19,6 @@ class Exercise < ActiveRecord::Base
 
   # Validations
   validates :name, presence: true
-  validates :detail, presence: true, length: { maximum: 160 }
   validates :video_id, presence: true
 
   # Helper function - not sure I will user this for v1
