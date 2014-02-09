@@ -14,4 +14,14 @@ class WorkoutSession < ActiveRecord::Base
   belongs_to :workout
   belongs_to :user
 
+  def mod_count
+    count = 0
+    self.workout.exercises.each do |exercise|
+      exercise.exercise_sessions.each do |x|
+        x.user == self.user && x.modified? ? count += 1 : count += 0
+      end
+    end
+    count
+  end
+
 end

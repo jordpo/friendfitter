@@ -22,8 +22,8 @@
       <table class="table-bordered table-condensed table">
         <tr>
           <th>User</th>
+          <th>Modified</th>
           <th>Comment</th>
-          <th>Mod</th>
           <th>Done</th>
           <th>PR</th>
         </tr>
@@ -31,8 +31,12 @@
           <% if exercise_session.workout == @workout %>
             <tr>
               <td><%= exercise_session.user.username %></td>
+              <% if exercise_session.modified? %>
+                <td><%= link_to exercise_session.exercise_modified.name,  exercise_session.exercise_modified %></td>
+              <% else %>
+                <td>Nope</td>
+              <% end %>
               <td><%= exercise_session.comment %></td>
-              <td><%= exercise_session.mod %></td>
               <td>
                 <% if exercise_session.accomplished? %>
                   <span class="glyphicon glyphicon-ok"></span>
@@ -50,7 +54,9 @@
         <% exercise.exercise_sessions.each do |exercise_session| %>
           <% if exercise_session.workout == @workout && exercise_session.user == current_user && !exercise_session.accomplished? %>
             <%= form_for exercise_session, method: 'put', html: {class: 'form-inline'} do |f| %>
-              <div class="form-group"><%= f.label :mod, class: 'sr-only' %><%= f.text_field :mod, class: 'form-control', placeholder: 'Modification' %></div>
+              <div class="form-group">
+                <%= f.collection_select :exercise_mod, Exercise.all, :id, :name, {prompt: true}, { class: 'form-control'} %>
+              </div>
               <div class="form-group"><%= f.label :comment, class: 'sr-only' %><%= f.text_field :comment, class: 'form-control', placeholder: 'Comment' %></div>
               <div class="checkbox"><%= f.label :pr,  'PR' %> <%= f.check_box :pr %></div>
               <%= f.hidden_field :accomplished, value: true %>
@@ -82,6 +88,7 @@
       <tr>
         <th>User</th>
         <th>Comment</th>
+        <th>Mods</th>
         <th>Done</th>
         <th>PR</th>
       </tr>
@@ -89,6 +96,7 @@
         <tr>
           <td><%= session.user.username %></td>
           <td><%= session.comment %></td>
+          <td><%= session.mod_count %></td>
           <td>
             <% if session.accomplished? %>
               <span class="glyphicon glyphicon-ok"></span>

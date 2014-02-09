@@ -17,4 +17,9 @@ class ExerciseSession < ActiveRecord::Base
   belongs_to :exercise
   belongs_to :user
   belongs_to :workout
+
+  # returns exercise modified object
+  def exercise_modified
+    Exercise.find(self.exercise_mod)
+  end
 end
