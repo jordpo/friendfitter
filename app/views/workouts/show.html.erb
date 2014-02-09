@@ -17,8 +17,8 @@
   <article class="col-md-7 side_border">
     <h2>Exercises</h2>
     <% @workout.exercises.each do |exercise| %>
-      <%= link_to exercise.name, exercise, class: 'btn btn-default' %>
-      <br><br>
+      <p><%= link_to exercise.name, exercise %>
+       | Detail: <%= exercise.detail %> | Duration: <%= exercise.duration %></p>
       <table class="table-bordered table-condensed table">
         <tr>
           <th>User</th>
