@@ -6,6 +6,7 @@ FriendFitter::Application.routes.draw do
   resources :communities
   resources :workouts, except: [:new]
   get '/workouts/new/:id' => 'workouts#new', as: 'new_workout'
+  get '/workouts/copy/:id' => 'workouts#copy', as: 'copy_workout'
   resources :exercises, except: [:new]
   get '/exercises/new/:id' => 'exercises#new', as: 'new_exercise'
   resources :workout_sessions

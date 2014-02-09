@@ -1,5 +1,5 @@
 class WorkoutsController < ApplicationController
-  before_action :get_workout, only: [:show, :edit, :update, :destroy]
+  before_action :get_workout, only: [:show, :edit, :update, :destroy, :copy]
 
   def index
     @my_workouts_pending = Workout.my_workouts_pending(current_user)
@@ -26,6 +26,24 @@ class WorkoutsController < ApplicationController
     else
       flash.now[:errors] = @workout.errors.full_messages.join(', ')
       render :new
+    end
+  end
+
+  def copy
+    new_workout = Workout.new
+    new_workout.assign_attributes(
+      name: @workout.name,
+      difficulty: @workout.difficulty,
+      community_id: @workout.community_id,
+      user_id: current_user.id
+      )
+    if new_workout.save
+      new_workout.exercises << @workout.exercises
+      flash[:notice] = 'Workout copied!'
+      redirect_to new_workout
+    else
+      flash[:errors] = new_workout.errors.full_messages.join(', ')
+      redirect_to :back
     end
   end
 
