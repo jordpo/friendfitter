@@ -35,6 +35,7 @@ class User < ActiveRecord::Base
 
   # username validation
   validates :username, presence: true
+  validates :username, uniqueness: true
 
   # Helper methods
   def pr_count
