@@ -18,7 +18,7 @@ class WorkoutSession < ActiveRecord::Base
     count = 0
     self.workout.exercises.each do |exercise|
       exercise.exercise_sessions.each do |x|
-        x.user == self.user && x.modified? ? count += 1 : count += 0
+        x.user == self.user && x.workout == self.workout && x.modified? ? count += 1 : count += 0
       end
     end
     count
