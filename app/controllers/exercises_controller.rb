@@ -21,6 +21,7 @@ class ExercisesController < ApplicationController
     video_id = youtube_search(exercise_params[:name])
     @exercise.assign_attributes(video_id: video_id)
     if @exercise.save
+      workout.add_exercise(@exercise)
       flash[:notice] = 'Exercise Saved!'
       redirect_to workout
     else
