@@ -32,6 +32,19 @@ class Workout < ActiveRecord::Base
     Exercise.all - self.exercises
   end
 
+  def add_exercise(exercise)
+   self.exercises << exercise
+    # add an exercise session for each user with this workout session
+    participants = self.workout_sessions.map do |x|
+      x.user_id
+    end
+    participants.each do |i|
+      User.find(i).exercise_sessions << ExerciseSession.new(
+        exercise_id: exercise.id,
+        workout_id: self.id)
+    end
+  end
+
   def self.my_workouts_pending(user)
     my_workouts = []
     user.workout_sessions.each do |x|
