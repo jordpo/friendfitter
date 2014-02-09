@@ -25,8 +25,8 @@ class ExercisesController < ApplicationController
       flash[:notice] = 'Exercise Saved!'
       redirect_to workout
     else
-      flash.now[:errors] = @exercise.errors.full_messages.join(', ')
-      render :new
+      flash[:errors] = @exercise.errors.full_messages.join(', ')
+      redirect_to :back
     end
   end
 

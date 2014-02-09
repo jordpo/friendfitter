@@ -19,6 +19,7 @@ class Exercise < ActiveRecord::Base
 
   # Validations
   validates :name, presence: true
+  validates :name, uniqueness: true
   validates :video_id, presence: true
 
   # Helper function - not sure I will user this for v1
