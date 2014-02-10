@@ -85,6 +85,10 @@ describe User do
     end
 
     describe '#participating?' do
+      it 'returns true if user is currently doing the workout passed in as a parameter' do
+        expect(@jord.participating?(@workout)).to eq true
+        expect(@dess.participating?(@workout)).to eq false
+      end
     end
   end
 

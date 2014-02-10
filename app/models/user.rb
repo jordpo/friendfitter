@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
     array = self.workout_sessions.map do |x|
       x.workout.id == workout.id
     end
-    array.index(true)
+    array.index(true) ? true : false
   end
 
   # omniauth helper methods
