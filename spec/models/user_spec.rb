@@ -36,4 +36,11 @@ describe User do
     user = FactoryGirl.build(:user, email: nil)
     expect(user).to_not be_valid
   end
+
+  describe "associations" do
+    it { should have_many :workout_sessions }
+    it { should have_many :exercise_sessions }
+    it { should have_many :workouts }
+    it { should have_and_belong_to_many :communities }
+  end
 end
