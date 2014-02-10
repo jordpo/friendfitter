@@ -28,13 +28,23 @@ describe User do
     user = FactoryGirl.create(:user)
     expect(user).to be_valid
   end
-  it 'is invalid without a username' do
-    user = FactoryGirl.build(:user, username: nil)
-    expect(user).to_not be_valid
-  end
-  it 'is invalid without an email' do
-    user = FactoryGirl.build(:user, email: nil)
-    expect(user).to_not be_valid
+
+  describe 'validations' do
+    before :each do
+      @jord = User.create(username: 'jord', email: 'jord@mail.com', password: 'abc123abc')
+    end
+    it 'is invalid without a username' do
+      user = FactoryGirl.build(:user, username: nil)
+      expect(user).to_not be_valid
+    end
+    it 'is invalid with a non unique username' do
+      @jord2 = User.create(username: 'jord', email: 'jord@mail.com', password: 'abc123abc')
+      expect(@jord2).to_not be_valid
+    end
+    it 'is invalid without an email' do
+      user = FactoryGirl.build(:user, email: nil)
+      expect(user).to_not be_valid
+    end
   end
 
   describe "associations" do
@@ -42,5 +52,10 @@ describe User do
     it { should have_many :exercise_sessions }
     it { should have_many :workouts }
     it { should have_and_belong_to_many :communities }
+  end
+
+  describe "#pr_count" do
+    it 'returns the number of workout_sessions with pr = true for a user' do
+    end
   end
 end
