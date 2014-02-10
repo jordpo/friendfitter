@@ -54,17 +54,35 @@ describe User do
     it { should have_and_belong_to_many :communities }
   end
 
-  describe "#pr_count" do
+  describe 'instance_methods' do
     before :each do
       @jord = User.create(username: 'jord', email: 'jord@mail.com', password: 'abc123abc')
+      @dess = User.create(username: 'dess', email: 'dess@mail.com', password: 'abc123abc')
       @rvc = Community.create(name: 'RVC', description: 'Upper Valley Locals')
+      @jord.communities << @rvc
       @workout = Workout.create(name: 'new_space', difficulty: 'easy', community: @rvc, user: @jord)
       @workout2 = Workout.create(name: 'new_space_redux', difficulty: 'medium', community: @rvc, user: @jord)
       @jord.workout_sessions << WorkoutSession.create(workout: @workout, pr: true, comment: 'yeah', accomplished: true)
       @jord.workout_sessions << WorkoutSession.create(workout: @workout2, pr: false, comment: 'blah', accomplished: true)
     end
-    it 'returns 1 for the user @jord since he has one pr across workout sessions' do
-      expect(@jord.pr_count).to eq 1
+    describe "#pr_count" do
+      it 'returns 1 for the user @jord since he has one pr across workout sessions' do
+        expect(@jord.pr_count).to eq 1
+      end
+    end
+
+    describe '#finished_count' do
+    end
+
+    describe '#community_member?' do
+      it 'returns true or false depending on whether user is connected to community' do
+        expect(@jord.community_member?(@rvc)).to eq true
+        expect(@dess.community_member?(@rvc)).to eq false
+      end
+    end
+
+    describe '#participating?' do
     end
   end
+
 end
