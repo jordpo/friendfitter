@@ -72,6 +72,9 @@ describe User do
     end
 
     describe '#finished_count' do
+      it 'returns number of workout_sessions where accomplished = true' do
+        expect(@jord.finished_count).to eq 2
+      end
     end
 
     describe '#community_member?' do
