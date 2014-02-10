@@ -55,7 +55,16 @@ describe User do
   end
 
   describe "#pr_count" do
-    it 'returns the number of workout_sessions with pr = true for a user' do
+    before :each do
+      @jord = User.create(username: 'jord', email: 'jord@mail.com', password: 'abc123abc')
+      @rvc = Community.create(name: 'RVC', description: 'Upper Valley Locals')
+      @workout = Workout.create(name: 'new_space', difficulty: 'easy', community: @rvc, user: @jord)
+      @workout2 = Workout.create(name: 'new_space_redux', difficulty: 'medium', community: @rvc, user: @jord)
+      @jord.workout_sessions << WorkoutSession.create(workout: @workout, pr: true, comment: 'yeah', accomplished: true)
+      @jord.workout_sessions << WorkoutSession.create(workout: @workout2, pr: false, comment: 'blah', accomplished: true)
+    end
+    it 'returns 1 for the user @jord since he has one pr across workout sessions' do
+      expect(@jord.pr_count).to eq 1
     end
   end
 end
