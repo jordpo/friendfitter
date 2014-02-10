@@ -42,11 +42,15 @@ gem 'omniauth-facebook'
 group :development, :test do
   gem 'rspec-rails'
   gem 'faker'
+  gem 'database_cleaner'
+  gem 'shoulda-matchers'
+  gem 'guard-rspec', require: false
 end
+
+gem 'simplecov', require: false, group: :test
 
 group :test do
   gem 'capybara'
-  gem 'guard-rspec'
   gem 'launchy'
   gem 'factory_girl_rails'
 end
@@ -61,18 +65,6 @@ gem 'dotenv-rails', :groups => [:development, :test]
 # Youtube videos and Google api
 gem 'google-api-client', '~> 0.4.3', :require => 'google/api_client'
 gem 'trollop'
-
-# Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.1.2'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano', group: :development
-
-# Use debugger
-# gem 'debugger', group: [:development, :test]
 
 group :development do
   gem 'pry'
