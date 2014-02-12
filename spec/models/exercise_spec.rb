@@ -16,15 +16,15 @@ require 'spec_helper'
 
 describe Exercise do
   it 'has a valid factory' do
-    exercise = FactoryGirl.create(:exercise)
+    exercise = create(:exercise)
     expect(exercise).to be_valid
   end
   it 'is invalid without a name' do
-    exercise = FactoryGirl.build(:exercise, name: nil)
+    exercise = build(:exercise, name: nil)
     expect(exercise).to_not be_valid
   end
   it 'is invalid without a video_id' do
-    exercise = FactoryGirl.build(:exercise, video_id: nil)
+    exercise = build(:exercise, video_id: nil)
     expect(exercise).to_not be_valid
   end
 end

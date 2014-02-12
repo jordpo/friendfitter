@@ -25,7 +25,7 @@ require 'spec_helper'
 
 describe User do
   it 'has a valid factory' do
-    user = FactoryGirl.create(:user)
+    user = create(:user)
     expect(user).to be_valid
   end
 
@@ -34,7 +34,7 @@ describe User do
       @jord = User.create(username: 'jord', email: 'jord@mail.com', password: 'abc123abc')
     end
     it 'is invalid without a username' do
-      user = FactoryGirl.build(:user, username: nil)
+      user = build(:user, username: nil)
       expect(user).to_not be_valid
     end
     it 'is invalid with a non unique username' do
@@ -42,7 +42,7 @@ describe User do
       expect(@jord2).to_not be_valid
     end
     it 'is invalid without an email' do
-      user = FactoryGirl.build(:user, email: nil)
+      user = build(:user, email: nil)
       expect(user).to_not be_valid
     end
   end

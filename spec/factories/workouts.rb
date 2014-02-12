@@ -13,8 +13,6 @@
 #  community_id :integer
 #
 
-require 'faker'
-
 FactoryGirl.define do
   factory :workout do |f|
     f.name { Faker::Name.name }
@@ -23,3 +21,4 @@ FactoryGirl.define do
     f.community FactoryGirl.create(:community)
   end
 end
+
