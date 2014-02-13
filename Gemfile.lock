@@ -42,6 +42,9 @@ GEM
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.1.4)
+    bullet (4.7.1)
+      activesupport
+      uniform_notifier (>= 1.4.0)
     callsite (0.0.11)
     capybara (2.2.1)
       mime-types (>= 1.16)
@@ -138,6 +141,7 @@ GEM
     multi_json (1.8.4)
     multi_xml (0.5.5)
     multipart-post (1.2.0)
+    newrelic_rpm (3.7.2.192)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
     oauth2 (0.9.3)
@@ -262,6 +266,7 @@ GEM
     uglifier (2.4.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    uniform_notifier (1.4.0)
     uuidtools (2.1.4)
     warden (1.2.3)
       rack (>= 1.0)
@@ -275,6 +280,7 @@ DEPENDENCIES
   annotate
   better_errors
   binding_of_caller
+  bullet
   capybara
   chronic
   coffee-rails (~> 4.0.0)
@@ -289,6 +295,7 @@ DEPENDENCIES
   jquery-rails
   launchy
   meta_request
+  newrelic_rpm
   omniauth-facebook
   pg
   pry

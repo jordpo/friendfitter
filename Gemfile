@@ -66,6 +66,8 @@ gem 'dotenv-rails', :groups => [:development, :test]
 gem 'google-api-client', '~> 0.4.3', :require => 'google/api_client'
 gem 'trollop'
 
+gem 'newrelic_rpm'
+
 group :development do
   gem 'pry'
   gem 'pry-nav'
@@ -80,6 +82,7 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request'
+  gem 'bullet'
 end
 
 ruby '2.0.0'
