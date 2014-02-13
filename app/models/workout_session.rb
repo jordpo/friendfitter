@@ -16,10 +16,8 @@ class WorkoutSession < ActiveRecord::Base
 
   def mod_count
     count = 0
-    self.workout.exercises.each do |exercise|
-      exercise.exercise_sessions.includes(:user, :workout).each do |x|
-        x.user == self.user && x.workout == self.workout && x.modified? ? count += 1 : count += 0
-      end
+    self.workout.exercise_sessions.includes(:user, :workout).each do |exercise|
+      exercise.user == self.user && exercise.workout == self.workout && exercise.modified? ? count += 1 : count += 0
     end
     count
   end

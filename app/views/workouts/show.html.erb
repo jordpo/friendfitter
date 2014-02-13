@@ -17,7 +17,7 @@
 <div class="row well no_padding">
   <article class="col-md-7 side_border">
     <h2>Exercises</h2>
-    <% @workout.exercises.each do |exercise| %>
+    <% @workout.exercises.includes(:exercise_sessions).each do |exercise| %>
       <p><span class="ex_name"><%= link_to exercise.name, exercise %></span>
        | Detail: <%= exercise.detail %> | Duration: <%= exercise.duration %></p>
       <table class="table-bordered table-condensed table">
@@ -28,7 +28,7 @@
           <th>Done</th>
           <th>PR</th>
         </tr>
-        <% exercise.exercise_sessions.each do |exercise_session| %>
+        <% exercise.exercise_sessions.includes(:workout, :user).each do |exercise_session| %>
           <% if exercise_session.workout == @workout %>
             <tr>
               <td><%= exercise_session.user.username %></td>
@@ -93,7 +93,7 @@
         <th>Done</th>
         <th>PR</th>
       </tr>
-      <% @workout.workout_sessions.each do |session| %>
+      <% @workout.workout_sessions.includes(:user, :workout).each do |session| %>
         <tr>
           <td><%= session.user.username %></td>
           <td><%= session.comment %></td>

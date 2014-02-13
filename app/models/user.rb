@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
 
   def participating?(workout)
     # current user has a workout session that points to this workout
-    array = self.workout_sessions.map do |x|
+    array = self.workout_sessions.includes(:workout).map do |x|
       x.workout.id == workout.id
     end
     array.index(true) ? true : false
