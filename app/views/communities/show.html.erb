@@ -21,7 +21,7 @@
           <th>Workouts Completed</th>
           <th>PRs</th>
         </tr>
-        <% @community.users.each do |user| %>
+        <% @community.users.includes(:workout_sessions).each do |user| %>
           <tr>
             <td><%= user.username %></td>
             <td><%= user.mantra %></td>
