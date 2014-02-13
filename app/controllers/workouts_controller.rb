@@ -2,9 +2,19 @@ class WorkoutsController < ApplicationController
   before_action :get_workout, only: [:show, :edit, :update, :destroy, :copy]
 
   def index
-    @my_workouts_pending = Workout.my_workouts_pending(current_user)
-    @my_workouts_completed = Workout.my_workouts_completed(current_user)
-    @other_workouts = Workout.other_workouts(current_user)
+    all = Workout.order(created_at: :desc).where(user: current_user).includes(:workout_sessions)
+    @my_workouts_pending = []
+    @my_workouts_completed = []
+    all.each do |workout|
+      workout.workout_sessions.each do |session|
+        if session.accomplished?
+          @my_workouts_completed << workout
+        else
+          @my_workouts_pending << workout
+        end
+      end
+    end
+    @other_workouts = all - @my_workouts_completed - @my_workouts_pending
     @communities = Community.all
   end
 
