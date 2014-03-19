@@ -70,6 +70,7 @@ gem 'newrelic_rpm'
 
 group :development do
   gem 'pry'
+  gem 'rack-mini-profiler'
   gem 'pry-nav'
   gem 'pry-rails'
   gem 'pry-stack_explorer'
