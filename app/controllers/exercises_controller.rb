@@ -18,8 +18,7 @@ class ExercisesController < ApplicationController
     workout_id = eval(params[:workout_ids].first[0])[:value]
     workout = Workout.find(workout_id)
     @exercise = Exercise.new(exercise_params)
-    video_id = youtube_search(exercise_params[:name])
-    @exercise.assign_attributes(video_id: video_id)
+    @exercise.assign_attributes(video_id: 'video_id')
     if @exercise.save
       workout.add_exercise(@exercise)
       flash[:notice] = 'Exercise Saved!'
@@ -35,8 +34,7 @@ class ExercisesController < ApplicationController
 
   def update
     @exercise.assign_attributes(exercise_params)
-    video_id = youtube_search(exercise_params[:name])
-    @exercise.assign_attributes(video_id: video_id)
+    @exercise.assign_attributes(video_id: 'video_id')
     if @exercise.save
       flash[:notice] = 'Exercise Updated!'
       redirect_to @exercise

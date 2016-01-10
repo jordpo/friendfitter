@@ -16,14 +16,14 @@ ActiveRecord::Schema.define(version: 20140209165611) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "communities", force: true do |t|
+  create_table "communities", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "communities_users", id: false, force: true do |t|
+  create_table "communities_users", id: false, force: :cascade do |t|
     t.integer "community_id", null: false
     t.integer "user_id",      null: false
   end
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20140209165611) do
   add_index "communities_users", ["community_id", "user_id"], name: "index_communities_users_on_community_id_and_user_id", using: :btree
   add_index "communities_users", ["user_id", "community_id"], name: "index_communities_users_on_user_id_and_community_id", using: :btree
 
-  create_table "exercise_sessions", force: true do |t|
+  create_table "exercise_sessions", force: :cascade do |t|
     t.integer "exercise_id"
     t.integer "user_id"
     t.boolean "pr"
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 20140209165611) do
   add_index "exercise_sessions", ["user_id"], name: "index_exercise_sessions_on_user_id", using: :btree
   add_index "exercise_sessions", ["workout_id"], name: "index_exercise_sessions_on_workout_id", using: :btree
 
-  create_table "exercises", force: true do |t|
+  create_table "exercises", force: :cascade do |t|
     t.text     "name"
     t.text     "detail"
     t.text     "duration"
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 20140209165611) do
 
   add_index "exercises", ["workout_id"], name: "index_exercises_on_workout_id", using: :btree
 
-  create_table "exercises_workouts", id: false, force: true do |t|
+  create_table "exercises_workouts", id: false, force: :cascade do |t|
     t.integer "exercise_id", null: false
     t.integer "workout_id",  null: false
   end
@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 20140209165611) do
   add_index "exercises_workouts", ["exercise_id", "workout_id"], name: "index_exercises_workouts_on_exercise_id_and_workout_id", using: :btree
   add_index "exercises_workouts", ["workout_id", "exercise_id"], name: "index_exercises_workouts_on_workout_id_and_exercise_id", using: :btree
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.text     "username",               default: "", null: false
@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(version: 20140209165611) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "workout_sessions", force: true do |t|
+  create_table "workout_sessions", force: :cascade do |t|
     t.integer "workout_id"
     t.integer "user_id"
     t.boolean "pr"
@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 20140209165611) do
   add_index "workout_sessions", ["user_id"], name: "index_workout_sessions_on_user_id", using: :btree
   add_index "workout_sessions", ["workout_id"], name: "index_workout_sessions_on_workout_id", using: :btree
 
-  create_table "workouts", force: true do |t|
+  create_table "workouts", force: :cascade do |t|
     t.text     "name"
     t.text     "difficulty"
     t.boolean  "posted"
